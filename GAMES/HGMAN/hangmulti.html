@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<head>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+<title>Hangman Multiplayer</title>
+<link rel="stylesheet" href="style-hang.css">
+<script src="hangmulti.js" id="rendered-js"></script>
+</head>
+<body>
+<div class="wrapper">
+   <h1>Hangman</h1>
+    <p>Use the letters below to guess the word.</p>
+</div>
+<div class="wrapper">
+    <div id="buttons">
+    </div>  
+	<br><br><br><br>
+    <p id="catagoryName"></p><a id="clue"></a>
+    <div id="hold">
+    </div>
+    <p id="mylives"></p>
+	  <canvas id="stickman" align="center"></canvas>
+      <div><button id="reset">Play again</button>
+      <button id="hint" style="display: none;">Hint</button></div>
+</div>
+<audio id="winA" src="win.mp3" hidden></audio>
+<audio id="gmovA" src="gmov.mp3" hidden></audio>
+<audio id="clA" src="click.mp3" hidden></audio>
+</body>

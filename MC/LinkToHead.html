@@ -1,0 +1,41 @@
+<head>
+<title>Link to Minecraft Head</title>
+</head>
+<body>
+<a>UUID:&emsp;&nbsp;&emsp;&emsp;</a><input type="text" id="uuid"></input>&ensp;<button onclick="GenRandomUUID();">Random</button><br><br>
+<a>Texture Link:&ensp;</a><input type="text" id="linkimg"></input><br><br><br>
+<button onclick="ConvertToCommand();">Convert</button><br><br>
+<textarea id="output" rows="5" cols="100"></textarea>
+
+<script>
+cmdpart1 = '/give @p minecraft:player_head{SkullOwner:{Id:"';
+cmdpart2 = '",Properties:{textures:[{Value:"';
+b64part1 = '{"textures":{"SKIN":{"url":"';
+b64part2 = '"}}}';
+cmdpart3 = '"}]}}}';
+
+function GenRandomUUID() {
+var seed = Date.now();
+if (window.performance && typeof window.performance.now === "function") {
+seed += performance.now();
+}
+
+var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+var r = (seed + Math.random() * 16) % 16 | 0;
+seed = Math.floor(seed/16);
+
+return (c === 'x' ? r : r & (0x3|0x8)).toString(16);
+});
+
+document.getElementById("uuid").value = uuid;
+}
+
+function ConvertToCommand() {
+if (document.getElementById("linkimg").value !== "" && document.getElementById("uuid").value) {
+b64final = btoa(b64part1 + document.getElementById("linkimg").value + b64part2);
+document.getElementById("output").value = cmdpart1 + document.getElementById("uuid").value + cmdpart2 + b64final + cmdpart3;
+} else {
+document.getElementById("output").value = "Write the UUID and the texture link first!\n(Remember that from 1.8.3 Minecraft allows skins only from textures.minecraft)";
+}}
+</script>
+</body>

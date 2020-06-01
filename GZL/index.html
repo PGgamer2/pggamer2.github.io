@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>GZDoom Launcher</title>
+<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="src/GZL.ico">
+<style>
+p, a, input, div, span, h1 {font-family: 'Source Sans Pro', sans-serif;}
+#header {
+  display: none;
+  background-color: #333;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 4.5em;
+  vertical-align: middle;
+}
+.menu-icon {
+  display: inline-block;
+  cursor: pointer;
+  margin-left:1em;
+  margin-top:0.5em;
+  position: fixed;
+}
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #282828;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+.change .bar1 {
+  -moz-transform: rotate(-45deg) translate(-9px, 6px);
+  -o-transform: rotate(-45deg) translate(-9px, 6px);
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  -ms-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+  background-color: white;
+}
+.change .bar2 {opacity: 0; background-color: white;}
+.change .bar3 {
+  -ms-transform: rotate(45deg) translate(-8px, -8px);
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  -o-transform: rotate(45deg) translate(-8px, -8px);
+  -moz-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+  background-color: white;
+}
+button{
+  @include corners (5px);
+  background:$base-color;
+  color:$white;
+  border: solid 1px $white;
+  text-decoration:none;
+  cursor:pointer;
+  font-size:1.5em;
+  padding:18px 10px;
+  width:255px;
+  margin: 5px;
+  outline: none;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+</style>
+</head>
+
+<body>
+<span id="header">
+<p style="color: white; text-align: center; padding-top: 3.5px; font-size: 120%;"><a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/MC';">MCreations</a>&emsp;&emsp;<a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/GAMES/home';">Games</a>&emsp;&emsp;<a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/CODE';">Coding</a></p>
+</span>
+
+<div class="menu-icon" onclick="OpenMenuTab(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<br><br><br>
+<div style="text-align:center;">
+<a style="text-align: center;"><h1>GZDoom Launcher</h1></a>
+<br>
+<div style="text-align: center;">
+	<a title="What"><img src="https://media.moddb.com/cache/images/mods/1/46/45227/thumb_620x2000/screen2.png" alt="View media" style="height: 35%; width: 35%;"></a>
+	<a title="are"><img src="https://media.moddb.com/cache/images/mods/1/46/45227/thumb_620x2000/screenmulti.png" alt="View media" style="height: 35%; width: 35%;"></a>
+	<a title="you"><img src="https://media.moddb.com/cache/images/mods/1/46/45227/thumb_620x2000/Screenshot_21_03_2020_10_58_36.png" alt="View media" style="height: 30%; width: 30%;"></a>
+	<a title="searching"><img src="https://media.moddb.com/cache/images/mods/1/46/45227/thumb_620x2000/screensh.png" alt="View media" style="height: 30%; width: 30%;"></a>
+	<a title="for?"><img src="https://media.moddb.com/cache/images/mods/1/46/45227/thumb_620x2000/screen.png" alt="View media" style="height: 30%; width: 30%;"></a>
+</div>
+<br><br>
+<a href="https://www.moddb.com/mods/gzdoom-launcher" title="View GZDoom Launcher on Mod DB" target="_blank"><img src="https://media.moddb.com/images/global/moddb.png" alt="GZDoom Launcher" /></a>
+<button style="transform: translate(0, -13px);" onclick="location = 'releases/GZDoomLauncher_v1.2.zip';">Download</button>
+<button style="width:100px; transform: translate(0, -13px);" onclick="location = 'https://github.com/PGgamer2/pggamer2.github.io/tree/master/GZL/src/';">Source</button><br>
+</div>
+<script>
+mchanged = "false";
+
+function OpenMenuTab(mx) {
+  if (mchanged == "true") {
+  mx.classList.toggle("change");
+  document.getElementById("header").style.display = 'none';
+  mchanged = "false";
+  } else {
+  mx.classList.toggle("change");
+  document.getElementById("header").style.display = 'block';
+  mchanged = "true";
+  }
+}
+</script>
+</body>
+</html>

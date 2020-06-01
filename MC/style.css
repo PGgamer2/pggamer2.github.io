@@ -1,0 +1,26 @@
+* {
+  font:inherit;
+  font-family: minecraftia;
+  text-shadow: 2px 2px #202020;
+  color: white;
+}
+h1 {
+  font:inherit;
+  font-size: 200%;
+  font-family: minecraftia;
+  text-shadow: 4px 4px #202020;
+  color: white;
+}
+h2 {
+  font:inherit;
+  font-size: 150%;
+  font-family: minecraftia;
+  text-shadow: 3px 3px #202020;
+  color: white;
+}
+
+.titlediv {margin: auto; text-align: center}
+#jukebox {width: 135px; height: 135px; text-align: right; margin-left: 100px}
+#disk {width: 120px; height: 120px; cursor:grab; text-align: left; margin-right: 100px}
+.title {text-align: center; font-size:250%; color: white; text-shadow: 4px 4px #202020; position: relative; bottom: 40px;}
+.content {text-align: center; margin-top: 30px;}

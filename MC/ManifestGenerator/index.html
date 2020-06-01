@@ -1,0 +1,60 @@
+<head>
+<title>MCBE Manifest Generator</title>
+<script src="script.js"></script>
+<link rel="stylesheet" href="https://pggamer2.github.io/MC/minestyle/minestyle.css">
+<meta content="Manifest,manifest.json,Json,Generator,pggamer2.github.io,PGgamer,PGgamer2,PGgamer06,Minecraft" name="keywords">
+<link rel="shortcut icon" type="image/x-icon" href="https://pggamer2.github.io/MC/images/jukebox.png">
+<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+<style>
+* {font-family: 'Open Sans', sans-serif;}
+input {border-radius: 5px; padding-left: 2px;}
+.roundborders {border-radius: 5px;}
+</style>
+</head>
+
+<body class="dirtbackground">
+	<h1 class="minecraftia" style="text-align: center;">Minecraft Bedrock Edition Manifest Generator</h1>
+	<hr style="border-top: dotted 2px white;"><br>
+	
+	&ensp;<select id="packtype" class="roundborders">
+		<option value="resources">Resource Pack</option>
+		<option value="data">Behavior Pack</option>
+		<option value="world_template">World Template</option>
+		<option value="skin_pack">Skin Pack</option>
+	</select><br><br><br>
+	
+	<label for="formver" class="minecraftia">Pack Format Version:</label>
+	<input type="text" id="formver" name="formver" placeholder="2"><br><br>
+	
+	<label for="packname" class="minecraftia">Pack Name:</label>
+	<input type="text" id="packname" name="packname"><br><br>
+	
+	<label for="packdesc" class="minecraftia">Pack Description:</label>
+	<input type="text" id="packdesc" name="packdesc"><br><br>
+	
+	<label for="packid" class="minecraftia">Pack UUID:</label>
+	<input type="text" id="packid" name="packid">&ensp;<button class="roundborders" onclick="GenUUID('packid');">Generate</button><br><br>
+	
+	<label for="packver" class="minecraftia">Pack Version:</label>
+	<input type="text" id="packver" name="packver" placeholder="1, 0, 0"><br><br>
+	
+	<label for="packminengver" class="minecraftia">Minimum Engine Version:</label>
+	<input type="text" id="packminengver" name="packminengver" placeholder="1, 13, 0"><br><br>
+	
+	<hr style="border-top: dotted 2px white;">
+	
+	<h2 class="minecraftia">Module</h2><br>
+	
+	<label for="moddesc" class="minecraftia">Module Description:</label>
+	<input type="text" id="moddesc" name="moddesc"><br><br>
+	
+	<label for="modid" class="minecraftia">Module UUID:</label>
+	<input type="text" id="modid" name="modid">&ensp;<button class="roundborders" onclick="GenUUID('modid');">Generate</button><br><br>
+	
+	<label for="modver" class="minecraftia">Module Version:</label>
+	<input type="text" id="modver" name="modver" placeholder="1, 0, 0"><br><br>
+	
+	<hr style="border-top: dotted 2px white;"><br>
+	
+	<button class="minebutton minecraftia" onclick="GenManifest();">Generate!</button>&emsp;<a class="minecraftia" id="logoutput"></a><br><br>
+</body>

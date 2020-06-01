@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<head>
+<title>N/A</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css">
+<script>
+window.onload = function() {
+    if ( navigator.userAgent.match(/Win32/i)
+     || navigator.userAgent.match(/Win64/i)
+     || navigator.userAgent.match(/Windows/i)
+     || navigator.userAgent.match(/WinCE/i) ) {
+        document.getElementById("addSelect").value = "1";
+    } else if ( navigator.userAgent.match(/Macintosh/i)
+     || navigator.userAgent.match(/MacIntel/i)
+     || navigator.userAgent.match(/MacPPC/i)
+     || navigator.userAgent.match(/Mac68K/i) ) {
+        document.getElementById("addSelect").value = "2";
+    } else if ( navigator.userAgent.match(/Linux/i) ) {
+        document.getElementById("addSelect").value = "3";
+    } else {document.getElementById("addSelect").value = "1";}
+}
+function Download() {
+    if (document.getElementById("addSelect").value == "1") {
+	    alert("Windows download");
+	} else if (document.getElementById("addSelect").value == "2") {
+	    alert("MacOS download")
+	} else if (document.getElementById("addSelect").value == "3") {
+	    alert("Linux download")
+	}
+}
+</script>
+</head>
+<body>
+<p style="text-align: center"><img src="favicon.ico" width="300px" height="300px"/></p>
+<p style="text-align: center"><button onclick="Download();">Download</button></p>
+  <select id="addSelect">
+     <option value="1">Windows</option>
+     <option value="2">MacOS</option>
+     <option value="3">Linux</option>
+  </select>
+  <div class="share-button">
+    <span><i class="fas fa-share-alt"></i> Share!</span>
+    <a href="#facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="#twitter"><i class="fab fa-twitter"></i></a>
+    <a href="#instagram"><i class="fab fa-instagram"></i></a>
+  </div>
+</body>

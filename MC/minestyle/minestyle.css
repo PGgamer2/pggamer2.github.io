@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'minecraftia';
+  src: url('mcfont.ttf');
+}
+@font-face {
+  font-family: 'MinecraftTen';
+  src: url('MinecraftTen.ttf');
+}
+.dirtbackground {
+	background-image: url(images/backgrounds/dirt.png);
+	background-size: 32px;
+}
+.endbackground {
+	background-image: url(images/backgrounds/endstone.png);
+	background-size: 32px;
+}
+.stonebackground {
+	background-image: url(images/backgrounds/stone.png);
+	background-size: 32px;
+}
+.netherbackground {
+	background-image: url(images/backgrounds/netherrack.png);
+	background-size: 32px;
+}
+.sandbackground {
+	background-image: url(images/backgrounds/sandstone.png);
+	background-size: 32px;
+}
+.farmlandbackground {
+	background-image: url(images/backgrounds/farmland.png);
+	background-size: 32px;
+}
+.light_wool_background {
+	background-image: url(images/backgrounds/light_wool.png);
+}
+.demobackground {
+	background-image: url(images/demo_background.png);
+	background-size: 100%;
+	background-position: center;
+	height: 498px;
+	width: 744px;
+	background-repeat: no-repeat;
+	text-align: center;
+	background-color: rgba(0,0,0,0);
+}
+.toast {
+  background-image: url(images/toast.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  text-align: center;
+  height: 66px;
+  width: 320px;
+  border: none;
+  color: white;
+  background-color: rgba(0,0,0,0);
+}
+.accessibility {
+  background-image: url(images/access-btn.png);
+  background-size: 100%;
+  cursor:pointer;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 40px;
+  width: 40px;
+  border: none;
+  color: white;
+  background-color: rgba(0,0,0,0);
+}
+.accessibility:hover {
+  background-image: url(images/access-btn-over.png);
+  background-size: 100%;
+  cursor:pointer;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 40px;
+  width: 40px;
+  border: none;
+  color: white;
+  background-color: rgba(0,0,0,0);
+}
+.minecraftia {
+  font:inherit;
+  font-family: minecraftia;
+  text-shadow: 2px 2px #202020;
+  color: white;
+}
+h1.minecraftia {
+  font:inherit;
+  font-size: 200%;
+  font-family: minecraftia;
+  text-shadow: 4px 4px #202020;
+  color: white;
+}
+h2.minecraftia {
+  font:inherit;
+  font-size: 150%;
+  font-family: minecraftia;
+  text-shadow: 3px 3px #202020;
+  color: white;
+}
+.minecraften {
+  font:inherit;
+  font-family: MinecraftTen;
+  text-shadow: 2px 2px #202020;
+  color: black;
+}
+h1.minecraften {
+  font:inherit;
+  font-size: 200%;
+  font-family: MinecraftTen;
+  text-shadow: 4px 4px #202020;
+}
+h2.minecraften {
+  font:inherit;
+  font-size: 150%;
+  font-family: MinecraftTen;
+  text-shadow: 3px 3px #202020;
+  color: black;
+}
+.minebutton {
+  background-image: url(images/btn.png);
+  background-size: 100%;
+  cursor:pointer;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 42px;
+  width: 400px;
+  border: none;
+  color: white;
+  background-color: rgba(0,0,0,0);
+}
+.minebutton:hover {
+  background-image: url(images/btn-over.png);
+  background-size: 100%;
+  cursor:pointer;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  height: 42px;
+  width: 400px;
+  border: none;
+  color: white;
+  background-color: rgba(0,0,0,0);
+}

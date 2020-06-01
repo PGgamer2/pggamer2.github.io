@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<head>
+	<title>PGgamer2 Blog</title>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<meta content="pggamer2.github.io,PGgamer,PGgamer2,PGgamer06,Minecraft,Blog,Doom,Coding,Hangman" name="keywords">
+	<meta name="description" content="This is my SITE!">
+	<style>
+p, a, input, div, span {font-family: 'Source Sans Pro', sans-serif;}
+#header {
+  display: none;
+  background-color: #333;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 4.5em;
+  vertical-align: middle;
+}
+.menu-icon {
+  display: inline-block;
+  cursor: pointer;
+  margin-left:1em;
+  margin-top:0.5em;
+  position: fixed;
+}
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+.change .bar1 {
+  -moz-transform: rotate(-45deg) translate(-9px, 6px);
+  -o-transform: rotate(-45deg) translate(-9px, 6px);
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  -ms-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+  background-color: white;
+}
+.change .bar2 {opacity: 0; background-color: white;}
+.change .bar3 {
+  -ms-transform: rotate(45deg) translate(-8px, -8px);
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  -o-transform: rotate(45deg) translate(-8px, -8px);
+  -moz-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+  background-color: white;
+}
+</style>
+</head>
+<body STYLE="background-color: #FFFFFF;">
+
+<span id="header">
+<p style="color: white; text-align: center; padding-top: 3.5px; font-size: 120%;">
+<a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/MC';">MCreations</a>&emsp;&emsp;
+<a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/GAMES/home';">Games</a>&emsp;&emsp;
+<a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/CODE';">Coding</a></p>
+</span>
+
+<div class="menu-icon" onclick="OpenMenuTab(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<br><br><br><br>
+<p style="text-align: center"><img border="0" height="60" src="PGTitle.png" width="421" /></p>
+
+<p style="text-align: center"><img border="0" height="39" src="myblogtxt.png" width="302" /></p>
+
+<br><br><br><br>
+
+<p style="text-align: center; font-size: 130%; font-weight:bold;">Projects:</p>
+<div id="cont1" style="text-align: center;">
+<a>&nbsp;&nbsp;</a>
+<input onclick="location = 'https://pggamer2.github.io/MC';" type="image" style="height: 130px; width: 130px;" src="MC\images\mcreations.png" />
+<a>&nbsp;&nbsp;</a>
+<input onclick="location = 'https://pggamer2.github.io/GAMES/home';" type="image" style="height: 140px; width: 140px;" src="GAMES\icon.png" />
+<a>&nbsp;&nbsp;</a>
+<input onclick="location = 'https://pggamer2.github.io/CODE';" type="image" style="height: 140px; width: 140px;" src="CODE\cmdicon.jpg" />
+</div>
+
+<br><br>
+<p style="text-align: center;font-family:Arial"><a href="https://pggamer2.github.io/yt-channel">Check my youtube channel too!</a></p>
+
+<br>
+<br>
+
+<div id="comments">
+<!-- begin wwww.htmlcommentbox.com -->
+ <div id="HCB_comment_box"><a href="http://www.htmlcommentbox.com">Comment Form</a> is loading comments...</div>
+ <link rel="stylesheet" type="text/css" href="https://www.htmlcommentbox.com/static/skins/bootstrap/twitter-bootstrap.css?v=0" />
+ <script type="text/javascript" id="hcb"> /*<!--*/ if(!window.hcb_user){hcb_user={};} hcb_user.PAGE="https://pggamer2.github.io";(function(){var s=document.createElement("script"), l=hcb_user.PAGE || (""+window.location).replace(/'/g,"%27"), h="https://www.htmlcommentbox.com";s.setAttribute("type","text/javascript");s.setAttribute("src", h+"/jread?page="+encodeURIComponent(l).replace("+","%2B")+"&opts=16862&num=10&ts=1568035562074");if (typeof s!="undefined") document.getElementsByTagName("head")[0].appendChild(s);})(); /*-->*/ </script>
+<!-- end www.htmlcommentbox.com -->
+</div>
+<br>
+<br>
+<a href="whatsapp://send?text=Wow%2C+guarda+cosa+ho+scoperto%21+Questa+persona+crea+tante+cose+interessanti+durante+il+suo+tempo+libero%21+pggamer2.github.io" data-event-category="Social" data-event-action="Share:Whatsapp" data-event-label="Article Title">Condividi su Whatsapp</a>
+<br>
+
+<script>
+mchanged = "false";
+
+function OpenMenuTab(mx) {
+  if (mchanged == "true") {
+  mx.classList.toggle("change");
+  document.getElementById("header").style.display = 'none';
+  mchanged = "false";
+  } else {
+  mx.classList.toggle("change");
+  document.getElementById("header").style.display = 'block';
+  mchanged = "true";
+  }
+}
+</script>
+</body>

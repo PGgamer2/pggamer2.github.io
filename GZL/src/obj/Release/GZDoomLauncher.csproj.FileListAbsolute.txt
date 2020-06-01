@@ -1,0 +1,16 @@
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\bin\Release\GZDoomLauncher.exe.config
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\bin\Release\GZDoomLauncher.exe
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\bin\Release\GZDoomLauncher.pdb
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\bin\Release\ICSharpCode.SharpZipLib.xml
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\bin\Release\Newtonsoft.Json.xml
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.csprojAssemblyReference.cache
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.GZDL.resources
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.Main.resources
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.Properties.Resources.resources
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.csproj.GenerateResource.cache
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.csproj.CoreCompileInputs.cache
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.csproj.CopyComplete
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.exe
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.pdb
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.csproj.Fody.CopyLocal.cache
+C:\Users\Piero\source\repos\GZDoomLauncher\GZDoomLauncher\obj\Release\GZDoomLauncher.InfoScreen.resources

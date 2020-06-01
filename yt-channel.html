@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<head>
+	<title>PGgamer2 Youtube Channel</title>
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+	<style>
+p, a, input, div, span {font-family: 'Source Sans Pro', sans-serif;}
+#header {
+  display: none;
+  background-color: #333;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 4.5em;
+  vertical-align: middle;
+}
+.menu-icon {
+  display: inline-block;
+  cursor: pointer;
+  margin-left:1em;
+  margin-top:0.5em;
+  position: fixed;
+}
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+.change .bar1 {
+  -moz-transform: rotate(-45deg) translate(-9px, 6px);
+  -o-transform: rotate(-45deg) translate(-9px, 6px);
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  -ms-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+  background-color: white;
+}
+.change .bar2 {opacity: 0; background-color: white;}
+.change .bar3 {
+  -ms-transform: rotate(45deg) translate(-8px, -8px);
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  -o-transform: rotate(45deg) translate(-8px, -8px);
+  -moz-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+  background-color: white;
+}
+button{
+  @include corners (5px);
+  background:$base-color;
+  color:$white;
+  border: solid 1px $white;
+  text-decoration:none;
+  cursor:pointer;
+  font-size:1.2em;
+  padding:18px 10px;
+  width:180px;
+  margin: 10px;
+  outline: none;
+}
+</style>
+<script>
+var ytlink = window.atob("aHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20veW91dHViZS92My9zZWFyY2g/cGFydD1zbmlwcGV0JmNoYW5uZWxJZD1VQ3AwdFlqZEMyWU4xcTRaYUtfdi1PYkEmbWF4UmVzdWx0cz0xJm9yZGVyPWRhdGUmdHlwZT12aWRlbyZrZXk9QUl6YVN5QnRNVkdMcVgzemdvMWdLV3FTNE9naW1FLXM2TDhxbGtr");
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    var lastVideo = JSON.parse(this.responseText);
+    console.log("Last video ID: " + lastVideo.items[0].id.videoId);
+	document.getElementById("latVideoIFrame").src = "https://www.youtube.com/embed/" + lastVideo.items[0].id.videoId;
+  }
+};
+xmlhttp.open("GET", ytlink, true);
+xmlhttp.send();
+</script>
+</head>
+<body BGCOLOR=#c4302b STYLE="background-color: #c4302b;">
+<span id="header">
+<p style="color: white; text-align: center; padding-top: 3.5px; font-size: 120%;"><a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/MC';">MCreations</a>&emsp;&emsp;<a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/GAMES/home';">Games</a>&emsp;&emsp;<a style="cursor:pointer;" onclick="location = 'https://pggamer2.github.io/CODE';">Coding</a></p>
+</span>
+
+<div class="menu-icon" onclick="OpenMenuTab(this)">
+  <div class="bar1"></div>
+  <div class="bar2"></div>
+  <div class="bar3"></div>
+</div>
+
+<br><br><br><br>
+<div style="margin: 0 auto; width: 600px;">
+<div style="text-align: center; background-color: white; width: 580px; height: 510px; border-radius: 10px;">
+<br><img border="0" height="60" src="PGTitle.png" width="421"/>
+<br><br>
+<a>My Youtube Channel</a>
+<br><br><br>
+<a>Last video:</a><br>
+<iframe id="latVideoIFrame" width="560" height="315" frameborder="0" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>Your browser doesn't support iframes. Update it or retry with another one.</iframe>
+<br></div></div>
+<br>
+<br>
+<script>
+mchanged = "false";
+
+function OpenMenuTab(mx) {
+  if (mchanged == "true") {
+  mx.classList.toggle("change");
+  document.getElementById("header").style.display = 'none';
+  mchanged = "false";
+  } else {
+  mx.classList.toggle("change");
+  document.getElementById("header").style.display = 'block';
+  mchanged = "true";
+  }
+}
+</script>
+</body>
