@@ -1,0 +1,13 @@
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\bin\Release\MC Server Manager.exe.config
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\bin\Release\MC Server Manager.exe
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\bin\Release\MC Server Manager.pdb
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\bin\Release\Newtonsoft.Json.xml
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC Server Manager.csprojAssemblyReference.cache
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC_Server_Manager.Main.resources
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC_Server_Manager.Properties.Resources.resources
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC Server Manager.csproj.GenerateResource.cache
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC Server Manager.csproj.CoreCompileInputs.cache
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC Server Manager.csproj.Fody.CopyLocal.cache
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC Server Manager.csproj.CopyComplete
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC Server Manager.exe
+C:\Users\Piero\source\repos\MC Server Manager\MC Server Manager\obj\Release\MC Server Manager.pdb
