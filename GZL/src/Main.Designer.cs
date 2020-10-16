@@ -73,6 +73,7 @@
             this.CustomParamLabel = new System.Windows.Forms.Label();
             this.SelectFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.AddPWADButton = new System.Windows.Forms.Button();
+            this.ZDoomSelComboBox = new System.Windows.Forms.ComboBox();
             this.groupBoxLaunchSettings.SuspendLayout();
             this.groupBoxMultiplayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HostNumber)).BeginInit();
@@ -507,16 +508,16 @@
             // CustomParamBox
             // 
             this.CustomParamBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustomParamBox.Location = new System.Drawing.Point(120, 303);
+            this.CustomParamBox.Location = new System.Drawing.Point(244, 303);
             this.CustomParamBox.Name = "CustomParamBox";
-            this.CustomParamBox.Size = new System.Drawing.Size(424, 26);
+            this.CustomParamBox.Size = new System.Drawing.Size(300, 26);
             this.CustomParamBox.TabIndex = 0;
             // 
             // CustomParamLabel
             // 
             this.CustomParamLabel.AutoSize = true;
             this.CustomParamLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustomParamLabel.Location = new System.Drawing.Point(117, 284);
+            this.CustomParamLabel.Location = new System.Drawing.Point(241, 284);
             this.CustomParamLabel.Name = "CustomParamLabel";
             this.CustomParamLabel.Size = new System.Drawing.Size(126, 16);
             this.CustomParamLabel.TabIndex = 12;
@@ -533,11 +534,26 @@
             this.AddPWADButton.UseVisualStyleBackColor = true;
             this.AddPWADButton.Click += new System.EventHandler(this.AddPWADButton_Click);
             // 
+            // ZDoomSelComboBox
+            // 
+            this.ZDoomSelComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ZDoomSelComboBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ZDoomSelComboBox.FormattingEnabled = true;
+            this.ZDoomSelComboBox.Items.AddRange(new object[] {
+            "GZDoom",
+            "LZDoom",
+            "ZDoom"});
+            this.ZDoomSelComboBox.Location = new System.Drawing.Point(117, 304);
+            this.ZDoomSelComboBox.Name = "ZDoomSelComboBox";
+            this.ZDoomSelComboBox.Size = new System.Drawing.Size(121, 24);
+            this.ZDoomSelComboBox.TabIndex = 13;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 346);
+            this.Controls.Add(this.ZDoomSelComboBox);
             this.Controls.Add(this.AddPWADButton);
             this.Controls.Add(this.CustomParamLabel);
             this.Controls.Add(this.CustomParamBox);
@@ -618,6 +634,7 @@
         private System.Windows.Forms.Button SaveProfileButton;
         private System.Windows.Forms.Button LoadProfileButton;
         private System.Windows.Forms.Button AboutButton;
+        private System.Windows.Forms.ComboBox ZDoomSelComboBox;
     }
 }
 

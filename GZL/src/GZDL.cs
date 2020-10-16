@@ -1,19 +1,12 @@
-﻿using System;
-using System.IO;
-using System.IO.Compression;
-using System.Collections.Generic;
+﻿using ICSharpCode.SharpZipLib.Zip;
+using Newtonsoft.Json.Linq;
+using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ICSharpCode.SharpZipLib.Zip;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json.Linq;
 
 namespace GZDoomLauncher
 {
@@ -25,6 +18,19 @@ namespace GZDoomLauncher
         }
 
         WebClient client;
+        public int ZDTypeDL = 0;
+
+        private void tryDelUselessFiles()
+        {
+            try
+            {
+                if (File.Exists(Application.StartupPath + "\\zdoom.zip"))
+                    File.Delete(Application.StartupPath + "\\zdoom.zip");
+                if (File.Exists(Application.StartupPath + "\\ZDGitInfo.txt"))
+                    File.Delete(Application.StartupPath + "\\ZDGitInfo.txt");
+            }
+            catch { Console.WriteLine("Can't delete useless files..."); }
+        }
 
         private void GZDL_Load(object sender, EventArgs e)
         {
@@ -33,7 +39,7 @@ namespace GZDoomLauncher
             try { client.OpenRead("http://google.com/generate_204"); }
             catch
             {
-                MessageBox.Show("You need internet connection to download GZDoom.\nRestart the software to continue.", "GZDoom Launcher");
+                MessageBox.Show("You need internet connection to download this.\nRestart the launcher to continue.", "GZDoom Launcher");
                 if (InvokeRequired)
                 {
                     Invoke(new MethodInvoker(delegate ()
@@ -41,31 +47,62 @@ namespace GZDoomLauncher
                         Environment.Exit(1);
                     }));
                 }
-                else
-                {
-                    Environment.Exit(1);
-                }
+                else Environment.Exit(1);
             }
 
-            client.Headers.Add("user-agent", "Anything");
-            client.DownloadFile("https://api.github.com/repos/coelckers/gzdoom/releases/latest", Application.StartupPath + "\\GZLatestLink.txt");
-            StreamReader reader = new StreamReader(Application.StartupPath + "\\GZLatestLink.txt");
-            string GZDGitAPI = reader.ReadToEnd();
-            JObject obj = JObject.Parse(GZDGitAPI);
-            string GZDlvg = (string)obj["tag_name"];
-            string GZDlatestVersion = GZDlvg.Replace("g", "");
-            string url = "https://github.com/coelckers/gzdoom/releases/download/g" + GZDlatestVersion + "/gzdoom-" + GZDlatestVersion.Replace(".", "-") + "-Windows-32bit.zip";
+            client.Headers.Add("user-agent", "Anything"); // Use this to avoid GitHub API problems.
+            string url = "";
+            switch (ZDTypeDL)
+            {
+                case 0:
+                    DownloadTextLabel.Text = "Downloading GZDoom...";
+                    client.DownloadFile("https://api.github.com/repos/coelckers/gzdoom/releases/latest", Application.StartupPath + "\\ZDGitInfo.txt");
+                    StreamReader gzreader = new StreamReader(Application.StartupPath + "\\ZDGitInfo.txt");
+                    string GZDGitAPI = gzreader.ReadToEnd();
+                    JObject gzobj = JObject.Parse(GZDGitAPI);
+                    JArray gzgitAssets = (JArray)gzobj["assets"];
+                    string gzassetSwitchingUrl = "";
+                    for (int i = 0; i < gzgitAssets.Count; i++)
+                    {
+                        gzassetSwitchingUrl = (string)gzobj["assets"][i]["browser_download_url"];
+                        if (gzassetSwitchingUrl.Contains("Windows"))
+                        {
+                            if ((Environment.Is64BitOperatingSystem && gzassetSwitchingUrl.Contains("64bit"))
+                                || (!Environment.Is64BitOperatingSystem && gzassetSwitchingUrl.Contains("32bit")))
+                                url = gzassetSwitchingUrl;
+                        }
+                    }
+                    break;
+                case 1:
+                    DownloadTextLabel.Text = "Downloading LZDoom...";
+                    client.DownloadFile("https://api.github.com/repos/drfrag666/gzdoom/releases/latest", Application.StartupPath + "\\ZDGitInfo.txt");
+                    StreamReader lzreader = new StreamReader(Application.StartupPath + "\\ZDGitInfo.txt");
+                    string LZGitAPI = lzreader.ReadToEnd();
+                    JObject lzobj = JObject.Parse(LZGitAPI);
+                    JArray lzgitAssets = (JArray)lzobj["assets"];
+                    string lzassetSwitchingUrl = "";
+                    for (int i = 0; i < lzgitAssets.Count; i++)
+                    {
+                        lzassetSwitchingUrl = (string)lzobj["assets"][i]["browser_download_url"];
+                        if ((Environment.Is64BitOperatingSystem && lzassetSwitchingUrl.Contains("x64"))
+                            || (!Environment.Is64BitOperatingSystem && lzassetSwitchingUrl.Contains("x86")))
+                            url = lzassetSwitchingUrl;
+                    }
+                    break;
+                case 2:
+                    DownloadTextLabel.Text = "Downloading ZDoom...";
+                    // ZDoom is discontinued and has no Git repository.
+                    url = "https://zdoom.org/files/zdoom/2.8/zdoom-2.8.1.zip";
+                    break;
+            }
 
             client.DownloadProgressChanged += Client_DownloadProgressChanged;
             client.DownloadFileCompleted += Client_DownloadFileCompleted;
-            if (Environment.Is64BitOperatingSystem)
-            {
-                url = url.Replace("32bit", "64bit");
-            }
+
             Thread thread = new Thread(() =>
             {
                 Uri uri = new Uri(url);
-                client.DownloadFileAsync(uri, Application.StartupPath + "\\gzdoom.zip");
+                client.DownloadFileAsync(uri, Application.StartupPath + "\\zdoom.zip");
             });
             thread.Start();
         }
@@ -75,19 +112,7 @@ namespace GZDoomLauncher
             try { client.OpenRead("http://google.com/generate_204"); }
             catch
             {
-                MessageBox.Show("You need internet connection to download GZDoom.\nRestart the software to continue.", "GZDoom Launcher");
-                try
-                {
-                    if (File.Exists(Application.StartupPath + "\\gzdoom.zip"))
-                    {
-                        File.Delete(Application.StartupPath + "\\gzdoom.zip");
-                    }
-                    if (File.Exists(Application.StartupPath + "\\GZLatestLink.txt"))
-                    {
-                        File.Delete(Application.StartupPath + "\\GZLatestLink.txt");
-                    }
-                }
-                catch { Console.WriteLine("Can't delete useless files..."); }
+                MessageBox.Show("You need internet connection to download this.\nRestart the launcher to continue.", "GZDoom Launcher");
                 if (InvokeRequired)
                 {
                     Invoke(new MethodInvoker(delegate ()
@@ -95,46 +120,42 @@ namespace GZDoomLauncher
                         Environment.Exit(1);
                     }));
                 }
-                else
-                {
-                    Environment.Exit(1);
-                }
+                else Environment.Exit(1);
             }
 
-            if (File.Exists(Application.StartupPath + "\\gzdoom.zip"))
+            if (File.Exists(Application.StartupPath + "\\zdoom.zip"))
             {
-                var zipFileName = Application.StartupPath + "\\gzdoom.zip";
-                var targetDir = Application.StartupPath + "\\GZDoom";
+                var zipFileName = Application.StartupPath + "\\zdoom.zip";
+                var targetDir = "";
+                switch (ZDTypeDL)
+                {
+                    case 0:
+                        targetDir = Application.StartupPath + "\\GZDoom";
+                        break;
+                    case 1:
+                        targetDir = Application.StartupPath + "\\LZDoom";
+                        break;
+                    case 2:
+                        targetDir = Application.StartupPath + "\\ZDoom";
+                        break;
+                }
                 FastZip fastZip = new FastZip();
-                string fileFilter = null;
-                fastZip.ExtractZip(zipFileName, targetDir, fileFilter);
-                MessageBox.Show("GZDoom successfully downloaded.\nRestart the software to complete the installation.", "GZDoom Launcher");
+                fastZip.ExtractZip(zipFileName, targetDir, null);
+                MessageBox.Show("Program successfully downloaded.\nRestart the launcher to complete the installation.", "GZDoom Launcher");
             }
             else
             {
-                MessageBox.Show("An error has occurred.\nRestart the software to continue.", "GZDoom Launcher");
+                MessageBox.Show("An error has occurred.\nRestart the launcher to continue.", "GZDoom Launcher");
             }
-            try
+            tryDelUselessFiles();
+            if (InvokeRequired)
             {
-                if (File.Exists(Application.StartupPath + "\\gzdoom.zip"))
+                Invoke(new MethodInvoker(delegate ()
                 {
-                    File.Delete(Application.StartupPath + "\\gzdoom.zip");
-                }
-                if (File.Exists(Application.StartupPath + "\\GZLatestLink.txt"))
-                {
-                    File.Delete(Application.StartupPath + "\\GZLatestLink.txt");
-                }
-            }
-            catch { Console.WriteLine("Can't delete useless files..."); }
-            if (InvokeRequired) {
-                Invoke(new MethodInvoker(delegate () {
                     Environment.Exit(0);
                 }));
             }
-            else
-            {
-                Environment.Exit(0);
-            }
+            else Environment.Exit(0);
         }
 
         private void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

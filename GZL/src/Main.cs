@@ -1,16 +1,10 @@
-﻿using System;
-using System.IO;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
 namespace GZDoomLauncher
 {
@@ -21,70 +15,69 @@ namespace GZDoomLauncher
             InitializeComponent();
         }
 
+        string GZpath = Directory.GetCurrentDirectory() + "\\GZDoom";
+        string ZDpath = Directory.GetCurrentDirectory() + "\\ZDoom";
+        string LZpath = Directory.GetCurrentDirectory() + "\\LZDoom";
+
         private void Main_Load(object sender, EventArgs e)
         {
             this.BoxSkillLvL.SelectedIndex = 2;
+            this.ZDoomSelComboBox.SelectedIndex = 0;
             ReloadList();
             try
             {
-                if (File.Exists(Application.StartupPath + "\\gzdoom.zip"))
-                {
-                    File.Delete(Application.StartupPath + "\\gzdoom.zip");
-                }
-                if (File.Exists(Application.StartupPath + "\\GZLatestLink.txt"))
-                {
-                    File.Delete(Application.StartupPath + "\\GZLatestLink.txt");
-                }
+                if (File.Exists(Application.StartupPath + "\\zdoom.zip"))
+                    File.Delete(Application.StartupPath + "\\zdoom.zip");
+                if (File.Exists(Application.StartupPath + "\\ZDGitInfo.txt"))
+                    File.Delete(Application.StartupPath + "\\ZDGitInfo.txt");
             }
             catch { Console.WriteLine("Can't delete useless files..."); }
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // Funny messages before leaving.
             string[] ExitMessages = {
-            "Please don't leave, there's more demons to toast!",
-            "Let's beat it -- This is turning into a bloodbath!",
-            "I wouldn't leave if I were you. Work is much worse.",
-            "Don't leave yet -- There's a demon around that corner!",
-            "Ya know, next time you come in here I'm gonna toast ya.",
-            "Go ahead and leave. See if I care.",
-            "Are you sure you want to quit this great game?",
-            "You want to quit? Then, thou hast lost an eighth!",
-            "Don't go now, there's a dimensional shambler waiting in the Explorer!",
-            "Get outta here and go back to your boring programs.",
-            "If I were your boss, I'd deathmatch ya in a minute!",
-            "Look, bud. You leave now and you forfeit your body count!",
-            "Just leave. When you come back, I'll be waiting with a bat.",
-            "You're lucky I don't smack you for thinking about leaving.",
-            "Are you sure you want to quit this great game?"
+                "Please don't leave, there's more demons to toast!",
+                "Let's beat it -- This is turning into a bloodbath!",
+                "I wouldn't leave if I were you. Work is much worse.",
+                "Don't leave yet -- There's a demon around that corner!",
+                "Ya know, next time you come in here I'm gonna toast ya.",
+                "Go ahead and leave. See if I care.",
+                "Are you sure you want to quit this great game?",
+                "You want to quit? Then, thou hast lost an eighth!",
+                "Don't go now, there's a dimensional shambler waiting in the Explorer!",
+                "Get outta here and go back to your boring programs.",
+                "If I were your boss, I'd deathmatch ya in a minute!",
+                "Look, bud. You leave now and you forfeit your body count!",
+                "Just leave. When you come back, I'll be waiting with a bat.",
+                "You're lucky I don't smack you for thinking about leaving.",
+                "Are you sure you want to quit this great game?"
             };
             Random randMsg = new Random();
             int index = randMsg.Next(ExitMessages.Length);
             DialogResult exitDialog = MessageBox.Show($"{ExitMessages[index]}", "Do you want to exit?", MessageBoxButtons.YesNo);
+
             if (exitDialog == DialogResult.Yes)
-            {
                 Application.ExitThread();
-            }
-            else
-            {
-                e.Cancel = true;
-            }
+            else e.Cancel = true;
         }
 
         private void ReloadList()
         {
+            // Reload list of WADS
             string iwadpath = Directory.GetCurrentDirectory() + "\\IWADS";
             string pwadpath = Directory.GetCurrentDirectory() + "\\PWADS";
-            System.IO.Directory.CreateDirectory(iwadpath);
-            System.IO.Directory.CreateDirectory(pwadpath);
+            Directory.CreateDirectory(iwadpath);
+            Directory.CreateDirectory(pwadpath);
 
-            string[] gwad = System.IO.Directory.GetFiles(iwadpath, "*.wad");
-            string[] gpk3 = System.IO.Directory.GetFiles(iwadpath, "*.pk3");
-            string[] gzip = System.IO.Directory.GetFiles(iwadpath, "*.zip");
-            string[] gpak = System.IO.Directory.GetFiles(iwadpath, "*.pak");
-            string[] gpk7 = System.IO.Directory.GetFiles(iwadpath, "*.pk7");
-            string[] ggrp = System.IO.Directory.GetFiles(iwadpath, "*.grp");
-            string[] grff = System.IO.Directory.GetFiles(iwadpath, "*.rff");
+            string[] gwad = Directory.GetFiles(iwadpath, "*.wad");
+            string[] gpk3 = Directory.GetFiles(iwadpath, "*.pk3");
+            string[] gzip = Directory.GetFiles(iwadpath, "*.zip");
+            string[] gpak = Directory.GetFiles(iwadpath, "*.pak");
+            string[] gpk7 = Directory.GetFiles(iwadpath, "*.pk7");
+            string[] ggrp = Directory.GetFiles(iwadpath, "*.grp");
+            string[] grff = Directory.GetFiles(iwadpath, "*.rff");
             string[] totalIWADS = gwad.Union(gpk3).Union(gzip).Union(gpak).Union(gpk7).Union(ggrp).Union(grff).ToArray();
             List<string> IWADStrList = new List<string>(totalIWADS);
             IWADlist.Items.Clear();
@@ -93,15 +86,15 @@ namespace GZDoomLauncher
                 IWADlist.Items.Add(new ListViewItem(IWelem));
             }
 
-            string[] fwad = System.IO.Directory.GetFiles(pwadpath, "*.wad");
-            string[] fpk3 = System.IO.Directory.GetFiles(pwadpath, "*.pk3");
-            string[] fzip = System.IO.Directory.GetFiles(pwadpath, "*.zip");
-            string[] fpak = System.IO.Directory.GetFiles(pwadpath, "*.pak");
-            string[] fpk7 = System.IO.Directory.GetFiles(pwadpath, "*.pk7");
-            string[] fgrp = System.IO.Directory.GetFiles(pwadpath, "*.grp");
-            string[] frff = System.IO.Directory.GetFiles(pwadpath, "*.rff");
-            string[] fdeh = System.IO.Directory.GetFiles(pwadpath, "*.deh");
-            string[] fbex = System.IO.Directory.GetFiles(pwadpath, "*.bex");
+            string[] fwad = Directory.GetFiles(pwadpath, "*.wad");
+            string[] fpk3 = Directory.GetFiles(pwadpath, "*.pk3");
+            string[] fzip = Directory.GetFiles(pwadpath, "*.zip");
+            string[] fpak = Directory.GetFiles(pwadpath, "*.pak");
+            string[] fpk7 = Directory.GetFiles(pwadpath, "*.pk7");
+            string[] fgrp = Directory.GetFiles(pwadpath, "*.grp");
+            string[] frff = Directory.GetFiles(pwadpath, "*.rff");
+            string[] fdeh = Directory.GetFiles(pwadpath, "*.deh");
+            string[] fbex = Directory.GetFiles(pwadpath, "*.bex");
             string[] totalPWADS = fwad.Union(fpk3).Union(fzip).Union(fpak).Union(fpk7).Union(fgrp).Union(frff).Union(fdeh).Union(fbex).ToArray();
             List<string> PWADStrList = new List<string>(totalPWADS);
             PWADlist.Items.Clear();
@@ -118,16 +111,32 @@ namespace GZDoomLauncher
 
         private void StartButton_Click(object sender, EventArgs e)
         {
+            string ZDName = "GZDoom";
+            string ZDDir = GZpath;
+            string ZDEXEPath = GZpath + "\\gzdoom.exe";
+            switch (ZDoomSelComboBox.SelectedIndex)
+            {
+                case 1:
+                    ZDName = "LZDoom";
+                    ZDDir = LZpath;
+                    ZDEXEPath = LZpath + "\\lzdoom.exe";
+                    break;
+                case 2:
+                    ZDName = "ZDoom";
+                    ZDDir = ZDpath;
+                    ZDEXEPath = ZDpath + "\\zdoom.exe";
+                    break;
+            }
+
             string totalArguments = "";
-            string GZpath = Directory.GetCurrentDirectory() + "\\GZDoom";
-            System.IO.Directory.CreateDirectory(GZpath);
-            if (File.Exists(GZpath + "\\gzdoom.exe"))
+            Directory.CreateDirectory(ZDDir);
+            if (File.Exists(ZDEXEPath))
             {
                 if (IWADlist.SelectedItems.Count > 0)
                 {
                     // Set Parameters
                     totalArguments = " -iwad \"" + IWADlist.SelectedItems[0].Text + "\"";
-                    
+
                     if (PWADlist.SelectedItems.Count > 0)
                     {
                         string selectedPWADS = "";
@@ -162,23 +171,21 @@ namespace GZDoomLauncher
                     if (BoxSkillLvL.Text != "Hurt me plenty")
                     {
                         string CurrentSkillLvL = "3";
-                        if (BoxSkillLvL.Text == "I'm too young to die")
+                        switch (BoxSkillLvL.Text)
                         {
-                            CurrentSkillLvL = "1";
+                            case "I'm too young to die":
+                                CurrentSkillLvL = "1";
+                                break;
+                            case "Hey, not too rough":
+                                CurrentSkillLvL = "2";
+                                break;
+                            case "Ultra-Violence":
+                                CurrentSkillLvL = "4";
+                                break;
+                            case "Nightmare!":
+                                CurrentSkillLvL = "5";
+                                break;
                         }
-                        if (BoxSkillLvL.Text == "Hey, not too rough")
-                        {
-                            CurrentSkillLvL = "2";
-                        }
-                        if (BoxSkillLvL.Text == "Ultra-Violence")
-                        {
-                            CurrentSkillLvL = "4";
-                        }
-                        if (BoxSkillLvL.Text == "Nightmare!")
-                        {
-                            CurrentSkillLvL = "5";
-                        }
-
                         totalArguments += " -skill " + CurrentSkillLvL;
                     }
 
@@ -249,7 +256,7 @@ namespace GZDoomLauncher
 
                     // Start GZDoom
                     Process GZInfo = new Process();
-                    GZInfo.StartInfo.FileName = GZpath + "\\gzdoom.exe";
+                    GZInfo.StartInfo.FileName = ZDEXEPath;
                     GZInfo.StartInfo.Arguments = totalArguments;
                     GZInfo.StartInfo.UseShellExecute = false;
                     GZInfo.Start();
@@ -265,10 +272,11 @@ namespace GZDoomLauncher
             }
             else
             {
-                DialogResult MissGZMsg = MessageBox.Show("GZDoom is missing.\nWould you like to download it?", "Some files are missing...", MessageBoxButtons.YesNo);
+                DialogResult MissGZMsg = MessageBox.Show($"{ZDName} is missing.\nWould you like to download it?", "Some files are missing...", MessageBoxButtons.YesNo);
                 if (MissGZMsg == DialogResult.Yes)
                 {
                     GZDL Downloader = new GZDL();
+                    Downloader.ZDTypeDL = ZDoomSelComboBox.SelectedIndex;
                     Downloader.ShowDialog();
                 }
             }
@@ -402,17 +410,21 @@ namespace GZDoomLauncher
             if (BoxSkillLvL.Text != "Hurt me plenty")
             {
                 string JCurrentSkillLvL = "3";
-                if (BoxSkillLvL.Text == "I'm too young to die")
-                    JCurrentSkillLvL = "1";
-
-                if (BoxSkillLvL.Text == "Hey, not too rough")
-                    JCurrentSkillLvL = "2";
-
-                if (BoxSkillLvL.Text == "Ultra-Violence")
-                    JCurrentSkillLvL = "4";
-
-                if (BoxSkillLvL.Text == "Nightmare!")
-                    JCurrentSkillLvL = "5";
+                switch (BoxSkillLvL.Text)
+                {
+                    case "I'm too young to die":
+                        JCurrentSkillLvL = "1";
+                        break;
+                    case "Hey, not too rough":
+                        JCurrentSkillLvL = "2";
+                        break;
+                    case "Ultra-Violence":
+                        JCurrentSkillLvL = "4";
+                        break;
+                    case "Nightmare!":
+                        JCurrentSkillLvL = "5";
+                        break;
+                }
 
                 FinalJSON += "\"Skill\": " + JCurrentSkillLvL + ",\n";
             }
@@ -533,16 +545,22 @@ namespace GZDoomLauncher
 
                     if ((string)Jobj["Skill"] != null)
                     {
-                        if ((string)Jobj["Skill"] == "1")
-                            BoxSkillLvL.SelectedIndex = 0;
-                        else if ((string)Jobj["Skill"] == "2")
-                            BoxSkillLvL.SelectedIndex = 1;
-                        else if ((string)Jobj["Skill"] == "4")
-                            BoxSkillLvL.SelectedIndex = 3;
-                        else if ((string)Jobj["Skill"] == "5")
-                            BoxSkillLvL.SelectedIndex = 4;
-                        else
-                            BoxSkillLvL.SelectedIndex = 2;
+                        BoxSkillLvL.SelectedIndex = 2;
+                        switch ((string)Jobj["Skill"])
+                        {
+                            case "1":
+                                BoxSkillLvL.SelectedIndex = 0;
+                                break;
+                            case "2":
+                                BoxSkillLvL.SelectedIndex = 1;
+                                break;
+                            case "4":
+                                BoxSkillLvL.SelectedIndex = 3;
+                                break;
+                            case "5":
+                                BoxSkillLvL.SelectedIndex = 4;
+                                break;
+                        }
                     }
 
                     if ((string)Jobj["NoMonsters"] != null)
