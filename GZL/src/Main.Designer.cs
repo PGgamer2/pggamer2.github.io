@@ -74,6 +74,9 @@
             this.SelectFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.AddPWADButton = new System.Windows.Forms.Button();
             this.ZDoomSelComboBox = new System.Windows.Forms.ComboBox();
+            this.labelMultItemGuide = new System.Windows.Forms.Label();
+            this.RemIWADButton = new System.Windows.Forms.Button();
+            this.RemPWADsButton = new System.Windows.Forms.Button();
             this.groupBoxLaunchSettings.SuspendLayout();
             this.groupBoxMultiplayer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.HostNumber)).BeginInit();
@@ -101,7 +104,7 @@
             // Icolumn
             // 
             this.Icolumn.Text = "";
-            this.Icolumn.Width = 508;
+            this.Icolumn.Width = 528;
             // 
             // IWlabel
             // 
@@ -139,9 +142,9 @@
             this.Pcolumn});
             this.PWADlist.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.PWADlist.HideSelection = false;
-            this.PWADlist.Location = new System.Drawing.Point(15, 154);
+            this.PWADlist.Location = new System.Drawing.Point(12, 154);
             this.PWADlist.Name = "PWADlist";
-            this.PWADlist.Size = new System.Drawing.Size(529, 109);
+            this.PWADlist.Size = new System.Drawing.Size(532, 109);
             this.PWADlist.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.PWADlist.TabIndex = 2;
             this.PWADlist.UseCompatibleStateImageBehavior = false;
@@ -150,7 +153,7 @@
             // Pcolumn
             // 
             this.Pcolumn.Text = "";
-            this.Pcolumn.Width = 508;
+            this.Pcolumn.Width = 528;
             // 
             // ReloadButton
             // 
@@ -548,11 +551,46 @@
             this.ZDoomSelComboBox.Size = new System.Drawing.Size(121, 24);
             this.ZDoomSelComboBox.TabIndex = 13;
             // 
+            // labelMultItemGuide
+            // 
+            this.labelMultItemGuide.AutoSize = true;
+            this.labelMultItemGuide.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
+            this.labelMultItemGuide.Location = new System.Drawing.Point(63, 137);
+            this.labelMultItemGuide.Name = "labelMultItemGuide";
+            this.labelMultItemGuide.Size = new System.Drawing.Size(255, 13);
+            this.labelMultItemGuide.TabIndex = 14;
+            this.labelMultItemGuide.Text = "(You can select multiple items using SHIFT and CTRL)";
+            // 
+            // RemIWADButton
+            // 
+            this.RemIWADButton.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
+            this.RemIWADButton.Location = new System.Drawing.Point(472, 4);
+            this.RemIWADButton.Name = "RemIWADButton";
+            this.RemIWADButton.Size = new System.Drawing.Size(20, 20);
+            this.RemIWADButton.TabIndex = 15;
+            this.RemIWADButton.Text = "−";
+            this.RemIWADButton.UseVisualStyleBackColor = true;
+            this.RemIWADButton.Click += new System.EventHandler(this.RemIWADButton_Click);
+            // 
+            // RemPWADsButton
+            // 
+            this.RemPWADsButton.Font = new System.Drawing.Font("Arial", 11.25F, System.Drawing.FontStyle.Bold);
+            this.RemPWADsButton.Location = new System.Drawing.Point(498, 134);
+            this.RemPWADsButton.Name = "RemPWADsButton";
+            this.RemPWADsButton.Size = new System.Drawing.Size(20, 20);
+            this.RemPWADsButton.TabIndex = 16;
+            this.RemPWADsButton.Text = "−";
+            this.RemPWADsButton.UseVisualStyleBackColor = true;
+            this.RemPWADsButton.Click += new System.EventHandler(this.RemPWADsButton_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 346);
+            this.Controls.Add(this.RemPWADsButton);
+            this.Controls.Add(this.RemIWADButton);
+            this.Controls.Add(this.labelMultItemGuide);
             this.Controls.Add(this.ZDoomSelComboBox);
             this.Controls.Add(this.AddPWADButton);
             this.Controls.Add(this.CustomParamLabel);
@@ -635,6 +673,9 @@
         private System.Windows.Forms.Button LoadProfileButton;
         private System.Windows.Forms.Button AboutButton;
         private System.Windows.Forms.ComboBox ZDoomSelComboBox;
+        private System.Windows.Forms.Label labelMultItemGuide;
+        private System.Windows.Forms.Button RemIWADButton;
+        private System.Windows.Forms.Button RemPWADsButton;
     }
 }
 

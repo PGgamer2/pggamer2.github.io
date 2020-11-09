@@ -18,6 +18,8 @@ namespace GZDoomLauncher
         string GZpath = Directory.GetCurrentDirectory() + "\\GZDoom";
         string ZDpath = Directory.GetCurrentDirectory() + "\\ZDoom";
         string LZpath = Directory.GetCurrentDirectory() + "\\LZDoom";
+        string iwadpath = Directory.GetCurrentDirectory() + "\\IWADS";
+        string pwadpath = Directory.GetCurrentDirectory() + "\\PWADS";
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -65,12 +67,10 @@ namespace GZDoomLauncher
 
         private void ReloadList()
         {
-            // Reload list of WADS
-            string iwadpath = Directory.GetCurrentDirectory() + "\\IWADS";
-            string pwadpath = Directory.GetCurrentDirectory() + "\\PWADS";
             Directory.CreateDirectory(iwadpath);
             Directory.CreateDirectory(pwadpath);
 
+            // Reload list of IWADs
             string[] gwad = Directory.GetFiles(iwadpath, "*.wad");
             string[] gpk3 = Directory.GetFiles(iwadpath, "*.pk3");
             string[] gzip = Directory.GetFiles(iwadpath, "*.zip");
@@ -80,12 +80,19 @@ namespace GZDoomLauncher
             string[] grff = Directory.GetFiles(iwadpath, "*.rff");
             string[] totalIWADS = gwad.Union(gpk3).Union(gzip).Union(gpak).Union(gpk7).Union(ggrp).Union(grff).ToArray();
             List<string> IWADStrList = new List<string>(totalIWADS);
-            IWADlist.Items.Clear();
+            for (int i = 0; i < IWADlist.Items.Count; i++)
+            {
+                if (IWADlist.Items[i].Text == $"{iwadpath}\\{Path.GetFileName(IWADlist.Items[i].Text)}")
+                    IWADlist.Items[i].Remove();
+            }
             foreach (string IWelem in IWADStrList)
             {
-                IWADlist.Items.Add(new ListViewItem(IWelem));
+                if (IWADlist.FindItemWithText(IWelem) == null)
+                    IWADlist.Items.Add(IWelem);
             }
+            ResizeListViewColumns(IWADlist);
 
+            // Reload list of PWADs
             string[] fwad = Directory.GetFiles(pwadpath, "*.wad");
             string[] fpk3 = Directory.GetFiles(pwadpath, "*.pk3");
             string[] fzip = Directory.GetFiles(pwadpath, "*.zip");
@@ -97,11 +104,17 @@ namespace GZDoomLauncher
             string[] fbex = Directory.GetFiles(pwadpath, "*.bex");
             string[] totalPWADS = fwad.Union(fpk3).Union(fzip).Union(fpak).Union(fpk7).Union(fgrp).Union(frff).Union(fdeh).Union(fbex).ToArray();
             List<string> PWADStrList = new List<string>(totalPWADS);
-            PWADlist.Items.Clear();
+            for (int i = 0; i < PWADlist.Items.Count; i++)
+            {
+                if (PWADlist.Items[i].Text == $"{pwadpath}\\{Path.GetFileName(PWADlist.Items[i].Text)}")
+                    PWADlist.Items[i].Remove();
+            }
             foreach (string PWelem in PWADStrList)
             {
-                PWADlist.Items.Add(new ListViewItem(PWelem));
+                if (PWADlist.FindItemWithText(PWelem) == null)
+                    PWADlist.Items.Add(PWelem);
             }
+            ResizeListViewColumns(PWADlist);
         }
 
         private void ReloadButton_Click(object sender, EventArgs e)
@@ -128,7 +141,7 @@ namespace GZDoomLauncher
                     break;
             }
 
-            string totalArguments = "";
+            string totalArguments;
             Directory.CreateDirectory(ZDDir);
             if (File.Exists(ZDEXEPath))
             {
@@ -139,7 +152,7 @@ namespace GZDoomLauncher
 
                     if (PWADlist.SelectedItems.Count > 0)
                     {
-                        string selectedPWADS = "";
+                        string selectedPWADS = String.Empty;
                         for (int i = 0; i < PWADlist.Items.Count; i++)
                         {
                             if (PWADlist.Items[i].Selected)
@@ -214,7 +227,7 @@ namespace GZDoomLauncher
                         totalArguments += " -host " + HostNumber.Value;
                     }
 
-                    string JoinPort = "";
+                    string JoinPort = String.Empty;
                     if (PortBox.Text != "5029" && PortBox.TextLength > 0 && PortBox.Text != " " && PortBox.Enabled)
                     {
                         if (ConnectBox.TextLength > 0)
@@ -251,7 +264,7 @@ namespace GZDoomLauncher
 
                     if (CustomParamBox.TextLength > 0 && CustomParamBox.Text != " ")
                     {
-                        totalArguments += " " + CustomParamBox.Text;
+                        totalArguments += $" {CustomParamBox.Text}";
                     }
 
                     // Start GZDoom
@@ -330,24 +343,16 @@ namespace GZDoomLauncher
             AddIWADialog.InitialDirectory = Directory.GetCurrentDirectory();
             AddIWADialog.DefaultExt = "wad";
             AddIWADialog.Filter = "Where's All the Data? (*.wad)|*.wad|PK3 Files (*.pk3)|*.pk3|Zipped Files (*.zip)|*.zip|PAK Files (*.pak)|*.pak|PK7 Files (*.pk7)|*.pk7|GRP Files (*.grp)|*.grp|RFF Files (*.rff)|*.rff|All files (*.*)|*.*";
+            AddIWADialog.Multiselect = true;
             AddIWADialog.ShowDialog();
-            if (AddIWADialog.FileName != "")
+            foreach (string file in AddIWADialog.FileNames)
             {
-                DialogResult CopyToIWADPrompt = MessageBox.Show("Would you like to copy this file to the IWAD directory?", "GZDoom Launcher", MessageBoxButtons.YesNo);
-                if (CopyToIWADPrompt == DialogResult.Yes)
+                if (!String.IsNullOrWhiteSpace(file) && IWADlist.FindItemWithText(file) == null)
                 {
-                    try
-                    {
-                        File.Copy(AddIWADialog.FileName, Directory.GetCurrentDirectory() + "\\IWADS\\" + Path.GetFileName(AddIWADialog.FileName));
-                    }
-                    catch { MessageBox.Show("Cannot copy the file to the directory.", "GZDoom Launcher"); }
-                    if (File.Exists(Directory.GetCurrentDirectory() + "\\IWADS\\" + Path.GetFileName(AddIWADialog.FileName))) { IWADlist.Items.Add(new ListViewItem(Directory.GetCurrentDirectory() + "\\IWADS\\" + Path.GetFileName(AddIWADialog.FileName))); }
-                }
-                else
-                {
-                    IWADlist.Items.Add(new ListViewItem(AddIWADialog.FileName));
+                    IWADlist.Items.Add(file);
                 }
             }
+            ResizeListViewColumns(IWADlist);
         }
 
         private void AddPWADButton_Click(object sender, EventArgs e)
@@ -356,24 +361,14 @@ namespace GZDoomLauncher
             AddPWADialog.InitialDirectory = Directory.GetCurrentDirectory();
             AddPWADialog.DefaultExt = "wad";
             AddPWADialog.Filter = "Where's All the Data? (*.wad)|*.wad|PK3 Files (*.pk3)|*.pk3|Zipped Files (*.zip)|*.zip|PAK Files (*.pak)|*.pak|PK7 Files (*.pk7)|*.pk7|GRP Files (*.grp)|*.grp|RFF Files (*.rff)|*.rff|DeHackEd Files (*.deh)|*.deh|BOOM Extension Files (*.bex)|*.bex|All files (*.*)|*.*";
+            AddPWADialog.Multiselect = true;
             AddPWADialog.ShowDialog();
-            if (AddPWADialog.FileName != "")
+            foreach (string file in AddPWADialog.FileNames)
             {
-                DialogResult CopyToPWADPrompt = MessageBox.Show("Would you like to copy this file to the PWAD directory?", "GZDoom Launcher", MessageBoxButtons.YesNo);
-                if (CopyToPWADPrompt == DialogResult.Yes)
-                {
-                    try
-                    {
-                        File.Copy(AddPWADialog.FileName, Directory.GetCurrentDirectory() + "\\PWADS\\" + Path.GetFileName(AddPWADialog.FileName));
-                    }
-                    catch { MessageBox.Show("Cannot copy the file to the directory.", "GZDoom Launcher"); }
-                    if (File.Exists(Directory.GetCurrentDirectory() + "\\PWADS\\" + Path.GetFileName(AddPWADialog.FileName))) { PWADlist.Items.Add(new ListViewItem(Directory.GetCurrentDirectory() + "\\PWADS\\" + Path.GetFileName(AddPWADialog.FileName))); }
-                }
-                else
-                {
-                    PWADlist.Items.Add(new ListViewItem(AddPWADialog.FileName));
-                }
+                if (!String.IsNullOrWhiteSpace(file) && PWADlist.FindItemWithText(file) == null)
+                    PWADlist.Items.Add(file);
             }
+            ResizeListViewColumns(PWADlist);
         }
 
         private void SaveProfileButton_Click(object sender, EventArgs e)
@@ -504,18 +499,25 @@ namespace GZDoomLauncher
                 {
                     if ((string)Jobj["SelectedIWAD"] != null)
                     {
+                        IWADlist.SelectedItems[0].Selected = false;
                         if (IWADlist.FindItemWithText((string)Jobj["SelectedIWAD"]) == null)
                             IWADlist.Items.Add((string)Jobj["SelectedIWAD"]);
+                        IWADlist.FindItemWithText((string)Jobj["SelectedIWAD"]).Selected = true;
+                        ResizeListViewColumns(IWADlist);
                     }
 
                     if ((JArray)Jobj["SelectedPWADs"] != null)
                     {
                         JArray JSelPWADsItems = (JArray)Jobj["SelectedPWADs"];
+                        for (int i = 0; i < PWADlist.Items.Count; i++)
+                            PWADlist.Items[i].Selected = false;
                         for (int i = 0; i < JSelPWADsItems.Count; i++)
                         {
                             if (PWADlist.FindItemWithText((string)Jobj["SelectedPWADs"][i]) == null)
                                 PWADlist.Items.Add((string)Jobj["SelectedPWADs"][i]);
+                            PWADlist.FindItemWithText((string)Jobj["SelectedPWADs"][i]).Selected = true;
                         }
+                        ResizeListViewColumns(PWADlist);
                     }
 
                     if ((string)Jobj["Audio"] != null)
@@ -645,6 +647,71 @@ namespace GZDoomLauncher
                         CustomParamBox.Text = (string)Jobj["OtherParameters"];
                     }
                 }
+            }
+        }
+
+        private void RemIWADButton_Click(object sender, EventArgs e)
+        {
+            if (IWADlist.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Select an IWAD from the list first.", "GZDoom Launcher");
+            }
+            else
+            {
+                if (File.Exists($"{iwadpath}\\{Path.GetFileName(IWADlist.SelectedItems[0].Text)}"))
+                {
+                    DialogResult RemIWADAsk = MessageBox.Show("Are you sure you want to remove the selected IWAD?\nATTENTION: it will be deleted from the IWADs folder.", "GZDoom Launcher", MessageBoxButtons.YesNo);
+                    if (RemIWADAsk == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            File.Delete(IWADlist.SelectedItems[0].Text);
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(err.Message);
+                        }
+                        IWADlist.SelectedItems[0].Remove();
+                    }
+                }
+                else
+                {
+                    DialogResult RemIWADAsk = MessageBox.Show("Are you sure you want to remove the selected IWAD from the list?", "GZDoom Launcher", MessageBoxButtons.YesNo);
+                    if (RemIWADAsk == DialogResult.Yes)
+                        IWADlist.SelectedItems[0].Remove();
+                }
+                ResizeListViewColumns(IWADlist);
+            }
+        }
+
+        private void RemPWADsButton_Click(object sender, EventArgs e)
+        {
+            if (PWADlist.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Select some PWADs from the list first.", "GZDoom Launcher");
+            }
+            else
+            {
+                string alertboxmsg = "Are you sure to remove these PWADs from the list?";
+                foreach (ListViewItem selPWAD in PWADlist.SelectedItems)
+                {
+                    if (File.Exists($"{pwadpath}\\{Path.GetFileName(selPWAD.Text)}"))
+                        alertboxmsg += "\nEvery file you wanted to remove that is in the PWADs folder will reappear after you click the reload button.";
+                }
+                DialogResult RemPWADsAsk = MessageBox.Show(alertboxmsg, "GZDoom Launcher", MessageBoxButtons.YesNo);
+                if (RemPWADsAsk == DialogResult.Yes)
+                {
+                    foreach (ListViewItem selPWAD in PWADlist.SelectedItems) selPWAD.Remove();
+                }
+                ResizeListViewColumns(PWADlist);
+            }
+        }
+
+        private void ResizeListViewColumns(ListView lv)
+        {
+            foreach (ColumnHeader column in lv.Columns)
+            {
+                column.Width = -1;
             }
         }
     }

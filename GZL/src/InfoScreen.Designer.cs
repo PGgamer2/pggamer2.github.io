@@ -50,17 +50,17 @@
             // 
             this.TextBox.AutoSize = true;
             this.TextBox.Font = new System.Drawing.Font("Microsoft YaHei UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TextBox.Location = new System.Drawing.Point(181, 12);
+            this.TextBox.Location = new System.Drawing.Point(178, 12);
             this.TextBox.Name = "TextBox";
-            this.TextBox.Size = new System.Drawing.Size(296, 95);
+            this.TextBox.Size = new System.Drawing.Size(306, 95);
             this.TextBox.TabIndex = 1;
-            this.TextBox.Text = "GZDoom Launcher 1.3\r\nMade by PGgamer\r\n\r\nThanks to ID Software for this awesome ga" +
-    "me.\r\nThanks to ZDoom Team for this launcher.";
+            this.TextBox.Text = "GZDoom Launcher 1.4 \r\nMade by PGgamer\r\n\r\nThanks to ID Software for this awesome g" +
+    "ame.\r\nThanks to the ZDoom Team for this source port.";
             // 
             // GoToSiteLink
             // 
             this.GoToSiteLink.AutoSize = true;
-            this.GoToSiteLink.Location = new System.Drawing.Point(182, 115);
+            this.GoToSiteLink.Location = new System.Drawing.Point(179, 122);
             this.GoToSiteLink.Name = "GoToSiteLink";
             this.GoToSiteLink.Size = new System.Drawing.Size(60, 13);
             this.GoToSiteLink.TabIndex = 2;
