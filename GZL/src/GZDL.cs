@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
@@ -24,10 +23,10 @@ namespace GZDoomLauncher
         {
             try
             {
-                if (File.Exists(Application.StartupPath + "\\zdoom.zip"))
-                    File.Delete(Application.StartupPath + "\\zdoom.zip");
-                if (File.Exists(Application.StartupPath + "\\ZDGitInfo.txt"))
-                    File.Delete(Application.StartupPath + "\\ZDGitInfo.txt");
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "zdoom.zip"))
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "zdoom.zip");
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt"))
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt");
             }
             catch { Console.WriteLine("Can't delete useless files..."); }
         }
@@ -56,8 +55,8 @@ namespace GZDoomLauncher
             {
                 case 0:
                     DownloadTextLabel.Text = "Downloading GZDoom...";
-                    client.DownloadFile("https://api.github.com/repos/coelckers/gzdoom/releases/latest", Application.StartupPath + "\\ZDGitInfo.txt");
-                    StreamReader gzreader = new StreamReader(Application.StartupPath + "\\ZDGitInfo.txt");
+                    client.DownloadFile("https://api.github.com/repos/coelckers/gzdoom/releases/latest", AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt");
+                    StreamReader gzreader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt");
                     string GZDGitAPI = gzreader.ReadToEnd();
                     JObject gzobj = JObject.Parse(GZDGitAPI);
                     JArray gzgitAssets = (JArray)gzobj["assets"];
@@ -75,8 +74,8 @@ namespace GZDoomLauncher
                     break;
                 case 1:
                     DownloadTextLabel.Text = "Downloading LZDoom...";
-                    client.DownloadFile("https://api.github.com/repos/drfrag666/gzdoom/releases/latest", Application.StartupPath + "\\ZDGitInfo.txt");
-                    StreamReader lzreader = new StreamReader(Application.StartupPath + "\\ZDGitInfo.txt");
+                    client.DownloadFile("https://api.github.com/repos/drfrag666/gzdoom/releases/latest", AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt");
+                    StreamReader lzreader = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt");
                     string LZGitAPI = lzreader.ReadToEnd();
                     JObject lzobj = JObject.Parse(LZGitAPI);
                     JArray lzgitAssets = (JArray)lzobj["assets"];
@@ -102,7 +101,7 @@ namespace GZDoomLauncher
             Thread thread = new Thread(() =>
             {
                 Uri uri = new Uri(url);
-                client.DownloadFileAsync(uri, Application.StartupPath + "\\zdoom.zip");
+                client.DownloadFileAsync(uri, AppDomain.CurrentDomain.BaseDirectory + "zdoom.zip");
             });
             thread.Start();
         }
@@ -123,20 +122,20 @@ namespace GZDoomLauncher
                 else Environment.Exit(1);
             }
 
-            if (File.Exists(Application.StartupPath + "\\zdoom.zip"))
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "zdoom.zip"))
             {
-                var zipFileName = Application.StartupPath + "\\zdoom.zip";
+                var zipFileName = AppDomain.CurrentDomain.BaseDirectory + "zdoom.zip";
                 var targetDir = "";
                 switch (ZDTypeDL)
                 {
                     case 0:
-                        targetDir = Application.StartupPath + "\\GZDoom";
+                        targetDir = AppDomain.CurrentDomain.BaseDirectory + "GZDoom";
                         break;
                     case 1:
-                        targetDir = Application.StartupPath + "\\LZDoom";
+                        targetDir = AppDomain.CurrentDomain.BaseDirectory + "LZDoom";
                         break;
                     case 2:
-                        targetDir = Application.StartupPath + "\\ZDoom";
+                        targetDir = AppDomain.CurrentDomain.BaseDirectory + "ZDoom";
                         break;
                 }
                 FastZip fastZip = new FastZip();

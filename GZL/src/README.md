@@ -1,4 +1,4 @@
-GZDoom Launcher v1.4 source code
+GZDoom Launcher v1.4.1.1 source code
 
 GZLauncher made by PGgamer.
 "GZDoom" and "Doom" aren't mine.
@@ -9,7 +9,7 @@ Used NuGet packages:
 - SharpZipLib
 
 # CHANGELOG
-* v1.4.1 Fixes and minor things:
+* v1.4.1.1 Fixes and minor things:
 Now you can load a profile without getting weird errors.
 Fixed typo in labelMultItemGuide.
 When opening the "Select PWADs" dialog use .pk3 files as default extension.

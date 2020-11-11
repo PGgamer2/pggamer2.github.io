@@ -16,11 +16,11 @@ namespace GZDoomLauncher
         }
 
         public string[] EXECArgs;
-        string GZpath   = AppDomain.CurrentDomain.BaseDirectory + "\\GZDoom";
-        string ZDpath   = AppDomain.CurrentDomain.BaseDirectory + "\\ZDoom";
-        string LZpath   = AppDomain.CurrentDomain.BaseDirectory + "\\LZDoom";
-        string iwadpath = AppDomain.CurrentDomain.BaseDirectory + "\\IWADS";
-        string pwadpath = AppDomain.CurrentDomain.BaseDirectory + "\\PWADS";
+        string GZpath   = AppDomain.CurrentDomain.BaseDirectory + "GZDoom";
+        string ZDpath   = AppDomain.CurrentDomain.BaseDirectory + "ZDoom";
+        string LZpath   = AppDomain.CurrentDomain.BaseDirectory + "LZDoom";
+        string iwadpath = AppDomain.CurrentDomain.BaseDirectory + "IWADS";
+        string pwadpath = AppDomain.CurrentDomain.BaseDirectory + "PWADS";
 
         private void Main_Load(object sender, EventArgs e)
         {
@@ -44,10 +44,10 @@ namespace GZDoomLauncher
 
             try
             {
-                if (File.Exists(Application.StartupPath + "\\zdoom.zip"))
-                    File.Delete(Application.StartupPath + "\\zdoom.zip");
-                if (File.Exists(Application.StartupPath + "\\ZDGitInfo.txt"))
-                    File.Delete(Application.StartupPath + "\\ZDGitInfo.txt");
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "zdoom.zip"))
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "zdoom.zip");
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt"))
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + "ZDGitInfo.txt");
             }
             catch { Console.WriteLine("Can't delete useless files..."); }
         }
