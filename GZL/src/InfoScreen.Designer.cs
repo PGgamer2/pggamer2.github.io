@@ -54,8 +54,8 @@
             this.TextBox.Name = "TextBox";
             this.TextBox.Size = new System.Drawing.Size(306, 95);
             this.TextBox.TabIndex = 1;
-            this.TextBox.Text = "GZDoom Launcher 1.4 \r\nMade by PGgamer\r\n\r\nThanks to ID Software for this awesome g" +
-    "ame.\r\nThanks to the ZDoom Team for this source port.";
+            this.TextBox.Text = "GZDoom Launcher 1.4.1 \r\nMade by PGgamer\r\n\r\nThanks to ID Software for this awesome" +
+    " game.\r\nThanks to the ZDoom Team for this source port.";
             // 
             // GoToSiteLink
             // 

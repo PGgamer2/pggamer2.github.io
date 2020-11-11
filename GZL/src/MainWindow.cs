@@ -8,24 +8,40 @@ using System.Windows.Forms;
 
 namespace GZDoomLauncher
 {
-    public partial class Main : Form
+    public partial class MainWindow : Form
     {
-        public Main()
+        public MainWindow()
         {
             InitializeComponent();
         }
 
-        string GZpath = Directory.GetCurrentDirectory() + "\\GZDoom";
-        string ZDpath = Directory.GetCurrentDirectory() + "\\ZDoom";
-        string LZpath = Directory.GetCurrentDirectory() + "\\LZDoom";
-        string iwadpath = Directory.GetCurrentDirectory() + "\\IWADS";
-        string pwadpath = Directory.GetCurrentDirectory() + "\\PWADS";
+        public string[] EXECArgs;
+        string GZpath   = AppDomain.CurrentDomain.BaseDirectory + "\\GZDoom";
+        string ZDpath   = AppDomain.CurrentDomain.BaseDirectory + "\\ZDoom";
+        string LZpath   = AppDomain.CurrentDomain.BaseDirectory + "\\LZDoom";
+        string iwadpath = AppDomain.CurrentDomain.BaseDirectory + "\\IWADS";
+        string pwadpath = AppDomain.CurrentDomain.BaseDirectory + "\\PWADS";
 
         private void Main_Load(object sender, EventArgs e)
         {
             this.BoxSkillLvL.SelectedIndex = 2;
             this.ZDoomSelComboBox.SelectedIndex = 0;
             ReloadList();
+
+            // EXE Parameters
+            bool startGZonFinish = false;
+            for (int i = 0; i < EXECArgs.Length; i++)
+            {
+                if (EXECArgs[i] == "-loadprofile" && !String.IsNullOrWhiteSpace(EXECArgs[i+1]))
+                {
+                    if (File.Exists(EXECArgs[i + 1]))
+                        LoadProfile(EXECArgs[i + 1]);
+                }
+                if (EXECArgs[i] == "-autostart") startGZonFinish = true;
+                if (EXECArgs[i] == "-closeonstart") CloseOnStartButton.Checked = true;
+            }
+            if (startGZonFinish) StartGZD();
+
             try
             {
                 if (File.Exists(Application.StartupPath + "\\zdoom.zip"))
@@ -123,6 +139,11 @@ namespace GZDoomLauncher
         }
 
         private void StartButton_Click(object sender, EventArgs e)
+        {
+            StartGZD();
+        }
+        
+        private void StartGZD()
         {
             string ZDName = "GZDoom";
             string ZDDir = GZpath;
@@ -298,7 +319,6 @@ namespace GZDoomLauncher
         private void ConfigExplorerSelectButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog SelectConfigFileDialog = new OpenFileDialog();
-            SelectConfigFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
             SelectConfigFileDialog.DefaultExt = "ini";
             SelectConfigFileDialog.Filter = "Configuration files (*.ini)|*.ini|All files (*.*)|*.*";
             SelectConfigFileDialog.ShowDialog();
@@ -340,7 +360,6 @@ namespace GZDoomLauncher
         private void AddIWADButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog AddIWADialog = new OpenFileDialog();
-            AddIWADialog.InitialDirectory = Directory.GetCurrentDirectory();
             AddIWADialog.DefaultExt = "wad";
             AddIWADialog.Filter = "Where's All the Data? (*.wad)|*.wad|PK3 Files (*.pk3)|*.pk3|Zipped Files (*.zip)|*.zip|PAK Files (*.pak)|*.pak|PK7 Files (*.pk7)|*.pk7|GRP Files (*.grp)|*.grp|RFF Files (*.rff)|*.rff|All files (*.*)|*.*";
             AddIWADialog.Multiselect = true;
@@ -358,9 +377,8 @@ namespace GZDoomLauncher
         private void AddPWADButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog AddPWADialog = new OpenFileDialog();
-            AddPWADialog.InitialDirectory = Directory.GetCurrentDirectory();
-            AddPWADialog.DefaultExt = "wad";
-            AddPWADialog.Filter = "Where's All the Data? (*.wad)|*.wad|PK3 Files (*.pk3)|*.pk3|Zipped Files (*.zip)|*.zip|PAK Files (*.pak)|*.pak|PK7 Files (*.pk7)|*.pk7|GRP Files (*.grp)|*.grp|RFF Files (*.rff)|*.rff|DeHackEd Files (*.deh)|*.deh|BOOM Extension Files (*.bex)|*.bex|All files (*.*)|*.*";
+            AddPWADialog.DefaultExt = "pk3";
+            AddPWADialog.Filter = "PK3 Files (*.pk3)|*.pk3|Where's All the Data? (*.wad)|*.wad|Zipped Files (*.zip)|*.zip|PAK Files (*.pak)|*.pak|PK7 Files (*.pk7)|*.pk7|GRP Files (*.grp)|*.grp|RFF Files (*.rff)|*.rff|DeHackEd Files (*.deh)|*.deh|BOOM Extension Files (*.bex)|*.bex|All files (*.*)|*.*";
             AddPWADialog.Multiselect = true;
             AddPWADialog.ShowDialog();
             foreach (string file in AddPWADialog.FileNames)
@@ -457,12 +475,20 @@ namespace GZDoomLauncher
             if (FinalJSON != "{\n") FinalJSON = FinalJSON.Remove(FinalJSON.Length - 2);
             FinalJSON += "\n}";
             SaveFileDialog JSONPath = new SaveFileDialog();
-            JSONPath.InitialDirectory = Directory.GetCurrentDirectory();
             JSONPath.FileName = "profile.gzlp";
             JSONPath.DefaultExt = "gzlp";
             JSONPath.Filter = "GZLauncher Profile (*.gzlp)|*.gzlp|JavaScript Object Notation (*.json)|*.json";
-            if (JSONPath.FileName.Length > 0 && JSONPath.ShowDialog() == DialogResult.OK)
-                File.WriteAllText(JSONPath.FileName, FinalJSON);
+            if (!String.IsNullOrWhiteSpace(JSONPath.FileName) && JSONPath.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    File.WriteAllText(JSONPath.FileName, FinalJSON);
+                }
+                catch(Exception err)
+                {
+                    MessageBox.Show("An error occurred:\n" + err.Message, "GZDoom Launcher");
+                }
+            }
         }
 
         private void AboutButton_Click(object sender, EventArgs e)
@@ -474,7 +500,6 @@ namespace GZDoomLauncher
         private void LoadProfileButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog ProfilePath = new OpenFileDialog();
-            ProfilePath.InitialDirectory = Directory.GetCurrentDirectory();
             ProfilePath.DefaultExt = "gzlp";
             ProfilePath.Filter = "GZLauncher Profile (*.gzlp)|*.gzlp|JavaScript Object Notation (*.json)|*.json|All files (*.*)|*.*";
             ProfilePath.ShowDialog();
@@ -486,166 +511,179 @@ namespace GZDoomLauncher
         {
             if (File.Exists(ArgProfilePath))
             {
-                StreamReader reader = new StreamReader(ArgProfilePath);
-                string PFJson = reader.ReadToEnd();
-                PFJson = PFJson.Replace("\\", "\\\\");
-                JObject Jobj = JObject.Parse(PFJson);
-
-                if ((string)Jobj["Host"] != null && (string)Jobj["ConnectTo"] != null)
+                try
                 {
-                    MessageBox.Show("This file has both \"Host\" and \"ConnectTo\" values", "An error has occurred");
+                    StreamReader reader = new StreamReader(ArgProfilePath);
+                    string PFJson = reader.ReadToEnd();
+                    PFJson = PFJson.Replace("\\", "\\\\");
+                    JObject Jobj = JObject.Parse(PFJson);
+
+                    if ((string)Jobj["Host"] != null && (string)Jobj["ConnectTo"] != null)
+                    {
+                        MessageBox.Show("This file has both \"Host\" and \"ConnectTo\" values", "An error has occurred");
+                    }
+                    else
+                    {
+                        if ((string)Jobj["SelectedIWAD"] != null)
+                        {
+                            foreach (ListViewItem selIWAD in IWADlist.SelectedItems) selIWAD.Selected = false;
+                            if (IWADlist.FindItemWithText((string)Jobj["SelectedIWAD"]) == null)
+                                IWADlist.Items.Add((string)Jobj["SelectedIWAD"]);
+                            IWADlist.FindItemWithText((string)Jobj["SelectedIWAD"]).Selected = true;
+                            ResizeListViewColumns(IWADlist);
+                        }
+
+                        if ((JArray)Jobj["SelectedPWADs"] != null)
+                        {
+                            JArray JSelPWADsItems = (JArray)Jobj["SelectedPWADs"];
+                            for (int i = 0; i < PWADlist.Items.Count; i++)
+                                PWADlist.Items[i].Selected = false;
+                            for (int i = 0; i < JSelPWADsItems.Count; i++)
+                            {
+                                if (PWADlist.FindItemWithText((string)Jobj["SelectedPWADs"][i]) == null)
+                                    PWADlist.Items.Add((string)Jobj["SelectedPWADs"][i]);
+                                PWADlist.FindItemWithText((string)Jobj["SelectedPWADs"][i]).Selected = true;
+                            }
+                            ResizeListViewColumns(PWADlist);
+                        }
+
+                        if ((string)Jobj["Audio"] != null)
+                        {
+                            if ((string)Jobj["Audio"] == "nosound")
+                            {
+                                radioNoSounds.Checked = true;
+                            }
+                            else if ((string)Jobj["Audio"] == "nosfx")
+                            {
+                                radioNoSFX.Checked = true;
+                            }
+                            else if ((string)Jobj["Audio"] == "nomusic")
+                            {
+                                radioNoMusic.Checked = true;
+                            }
+                            else
+                            {
+                                radioAllSounds.Checked = true;
+                            }
+                        }
+
+                        if ((string)Jobj["StartMap"] != null)
+                        {
+                            StartFromBox.Text = (string)Jobj["StartMap"];
+                        }
+
+                        if ((string)Jobj["Skill"] != null)
+                        {
+                            BoxSkillLvL.SelectedIndex = 2;
+                            switch ((string)Jobj["Skill"])
+                            {
+                                case "1":
+                                    BoxSkillLvL.SelectedIndex = 0;
+                                    break;
+                                case "2":
+                                    BoxSkillLvL.SelectedIndex = 1;
+                                    break;
+                                case "4":
+                                    BoxSkillLvL.SelectedIndex = 3;
+                                    break;
+                                case "5":
+                                    BoxSkillLvL.SelectedIndex = 4;
+                                    break;
+                            }
+                        }
+
+                        if ((string)Jobj["NoMonsters"] != null)
+                        {
+                            if ((string)Jobj["NoMonsters"] == "True")
+                                NoMonstersButton.Checked = true;
+                            else
+                                NoMonstersButton.Checked = false;
+                        }
+
+                        if ((string)Jobj["FastMonsters"] != null)
+                        {
+                            if ((string)Jobj["FastMonsters"] == "True")
+                                FastMonstersButton.Checked = true;
+                            else
+                                FastMonstersButton.Checked = false;
+                        }
+
+                        if ((string)Jobj["MonstersCanRespawn"] != null)
+                        {
+                            if ((string)Jobj["MonstersCanRespawn"] == "True")
+                                MonstersRespawnButton.Checked = true;
+                            else
+                                MonstersRespawnButton.Checked = false;
+                        }
+
+                        if ((string)Jobj["ConfigFilePath"] != null)
+                        {
+                            ConfigPathBox.Text = (string)Jobj["ConfigFilePath"];
+                        }
+
+                        if ((string)Jobj["Host"] != null)
+                        {
+                            PortBox.Enabled = true;
+                            DeathmatchButton.Enabled = true;
+                            PacketServerButton.Enabled = true;
+                            ConnectBox.Enabled = false;
+                            HostNumber.Enabled = true;
+                            HostNumber.Value = (decimal)Jobj["Host"];
+                        }
+                        else if ((string)Jobj["ConnectTo"] != null)
+                        {
+                            PortBox.Enabled = true;
+                            HostNumber.Enabled = false;
+                            ConnectBox.Enabled = true;
+                            DeathmatchButton.Enabled = false;
+                            PacketServerButton.Enabled = false;
+                            ConnectBox.Text = (string)Jobj["ConnectTo"];
+                        }
+
+                        if ((string)Jobj["Port"] != null)
+                        {
+                            PortBox.Text = (string)Jobj["Port"];
+                        }
+
+                        if ((string)Jobj["Deathmatch"] != null)
+                        {
+                            if ((string)Jobj["Deathmatch"] == "True")
+                            {
+                                DeathmatchButton.Checked = true;
+                            }
+                            else
+                            {
+                                DeathmatchButton.Checked = false;
+                            }
+                        }
+
+                        if ((string)Jobj["PacketServer"] != null)
+                        {
+                            if ((string)Jobj["PacketServer"] == "True")
+                            {
+                                PacketServerButton.Checked = true;
+                            }
+                            else
+                            {
+                                PacketServerButton.Checked = false;
+                            }
+                        }
+
+                        if ((string)Jobj["OtherParameters"] != null)
+                        {
+                            CustomParamBox.Text = (string)Jobj["OtherParameters"];
+                        }
+                    }
                 }
-                else
+                catch(Newtonsoft.Json.JsonReaderException err)
                 {
-                    if ((string)Jobj["SelectedIWAD"] != null)
-                    {
-                        IWADlist.SelectedItems[0].Selected = false;
-                        if (IWADlist.FindItemWithText((string)Jobj["SelectedIWAD"]) == null)
-                            IWADlist.Items.Add((string)Jobj["SelectedIWAD"]);
-                        IWADlist.FindItemWithText((string)Jobj["SelectedIWAD"]).Selected = true;
-                        ResizeListViewColumns(IWADlist);
-                    }
-
-                    if ((JArray)Jobj["SelectedPWADs"] != null)
-                    {
-                        JArray JSelPWADsItems = (JArray)Jobj["SelectedPWADs"];
-                        for (int i = 0; i < PWADlist.Items.Count; i++)
-                            PWADlist.Items[i].Selected = false;
-                        for (int i = 0; i < JSelPWADsItems.Count; i++)
-                        {
-                            if (PWADlist.FindItemWithText((string)Jobj["SelectedPWADs"][i]) == null)
-                                PWADlist.Items.Add((string)Jobj["SelectedPWADs"][i]);
-                            PWADlist.FindItemWithText((string)Jobj["SelectedPWADs"][i]).Selected = true;
-                        }
-                        ResizeListViewColumns(PWADlist);
-                    }
-
-                    if ((string)Jobj["Audio"] != null)
-                    {
-                        if ((string)Jobj["Audio"] == "nosound")
-                        {
-                            radioNoSounds.Checked = true;
-                        }
-                        else if ((string)Jobj["Audio"] == "nosfx")
-                        {
-                            radioNoSFX.Checked = true;
-                        }
-                        else if ((string)Jobj["Audio"] == "nomusic")
-                        {
-                            radioNoMusic.Checked = true;
-                        }
-                        else
-                        {
-                            radioAllSounds.Checked = true;
-                        }
-                    }
-
-                    if ((string)Jobj["StartMap"] != null)
-                    {
-                        StartFromBox.Text = (string)Jobj["StartMap"];
-                    }
-
-                    if ((string)Jobj["Skill"] != null)
-                    {
-                        BoxSkillLvL.SelectedIndex = 2;
-                        switch ((string)Jobj["Skill"])
-                        {
-                            case "1":
-                                BoxSkillLvL.SelectedIndex = 0;
-                                break;
-                            case "2":
-                                BoxSkillLvL.SelectedIndex = 1;
-                                break;
-                            case "4":
-                                BoxSkillLvL.SelectedIndex = 3;
-                                break;
-                            case "5":
-                                BoxSkillLvL.SelectedIndex = 4;
-                                break;
-                        }
-                    }
-
-                    if ((string)Jobj["NoMonsters"] != null)
-                    {
-                        if ((string)Jobj["NoMonsters"] == "True")
-                            NoMonstersButton.Checked = true;
-                        else
-                            NoMonstersButton.Checked = false;
-                    }
-
-                    if ((string)Jobj["FastMonsters"] != null)
-                    {
-                        if ((string)Jobj["FastMonsters"] == "True")
-                            FastMonstersButton.Checked = true;
-                        else
-                            FastMonstersButton.Checked = false;
-                    }
-
-                    if ((string)Jobj["MonstersCanRespawn"] != null)
-                    {
-                        if ((string)Jobj["MonstersCanRespawn"] == "True")
-                            MonstersRespawnButton.Checked = true;
-                        else
-                            MonstersRespawnButton.Checked = false;
-                    }
-
-                    if ((string)Jobj["ConfigFilePath"] != null)
-                    {
-                        ConfigPathBox.Text = (string)Jobj["ConfigFilePath"];
-                    }
-
-                    if ((string)Jobj["Host"] != null)
-                    {
-                        PortBox.Enabled = true;
-                        DeathmatchButton.Enabled = true;
-                        PacketServerButton.Enabled = true;
-                        ConnectBox.Enabled = false;
-                        HostNumber.Enabled = true;
-                        HostNumber.Value = (decimal)Jobj["Host"];
-                    }
-                    else if ((string)Jobj["ConnectTo"] != null)
-                    {
-                        PortBox.Enabled = true;
-                        HostNumber.Enabled = false;
-                        ConnectBox.Enabled = true;
-                        DeathmatchButton.Enabled = false;
-                        PacketServerButton.Enabled = false;
-                        ConnectBox.Text = (string)Jobj["ConnectTo"];
-                    }
-
-                    if ((string)Jobj["Port"] != null)
-                    {
-                        PortBox.Text = (string)Jobj["Port"];
-                    }
-
-                    if ((string)Jobj["Deathmatch"] != null)
-                    {
-                        if ((string)Jobj["Deathmatch"] == "True")
-                        {
-                            DeathmatchButton.Checked = true;
-                        }
-                        else
-                        {
-                            DeathmatchButton.Checked = false;
-                        }
-                    }
-
-                    if ((string)Jobj["PacketServer"] != null)
-                    {
-                        if ((string)Jobj["PacketServer"] == "True")
-                        {
-                            PacketServerButton.Checked = true;
-                        }
-                        else
-                        {
-                            PacketServerButton.Checked = false;
-                        }
-                    }
-
-                    if ((string)Jobj["OtherParameters"] != null)
-                    {
-                        CustomParamBox.Text = (string)Jobj["OtherParameters"];
-                    }
+                    Console.WriteLine(err.Message);
+                    MessageBox.Show("An error occurred: the syntax of the JSON is incorrect.\nProbably this isn't a profile file", "GZDoom Launcher");
+                }
+                catch(Exception err)
+                {
+                    Console.WriteLine(err.Message);
+                    MessageBox.Show("An error occurred:\n" + err.Message, "GZDoom Launcher");
                 }
             }
         }

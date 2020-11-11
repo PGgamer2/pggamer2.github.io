@@ -1,6 +1,6 @@
 ﻿namespace GZDoomLauncher
 {
-    partial class Main
+    partial class MainWindow
     {
         /// <summary>
         /// Variabile di progettazione necessaria.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.IWADlist = new System.Windows.Forms.ListView();
             this.Icolumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.IWlabel = new System.Windows.Forms.Label();
@@ -557,9 +557,9 @@
             this.labelMultItemGuide.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
             this.labelMultItemGuide.Location = new System.Drawing.Point(63, 137);
             this.labelMultItemGuide.Name = "labelMultItemGuide";
-            this.labelMultItemGuide.Size = new System.Drawing.Size(255, 13);
+            this.labelMultItemGuide.Size = new System.Drawing.Size(246, 13);
             this.labelMultItemGuide.TabIndex = 14;
-            this.labelMultItemGuide.Text = "(You can select multiple items using SHIFT and CTRL)";
+            this.labelMultItemGuide.Text = "(You can select multiple items using SHIFT or CTRL)";
             // 
             // RemIWADButton
             // 

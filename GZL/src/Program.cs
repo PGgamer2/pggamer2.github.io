@@ -11,9 +11,8 @@ namespace GZDoomLauncher
     {
         // GZLauncher made by PGgamer.
         // "GZDoom" and "Doom" aren't mine.
-        // This software is not yours. Please appoint the author of the program if you modify it.
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -25,7 +24,9 @@ namespace GZDoomLauncher
             }
             else
             {
-                Application.Run(new Main());
+                MainWindow gzlmain = new MainWindow();
+                gzlmain.EXECArgs = args;
+                Application.Run(gzlmain);
             }
         }
     }
