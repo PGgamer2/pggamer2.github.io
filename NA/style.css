@@ -1,15 +1,11 @@
-button{
+button {
   @include corners (5px);
-  color: white
-  border: solid 1px grey;
-  text-decoration:none;
-  cursor:pointer;
-  font-size:1.2em;
-  padding:10px 10px;
-  width:180px;
-  height:55px;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.5em;
+  padding: 18px 10px;
+  width: 255px;
   margin: 5px;
-  outline: none;
 }
 #addSelect{
   width: 150px;
