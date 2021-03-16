@@ -9,72 +9,13 @@ body {background-color: black; margin:0px; padding:0px; overflow:hidden;}
     width: 100%;
     overflow: hidden;
 }
-#w10sec {
-    float:left;
-    border: 1px solid white;
-	border-radius: 7px;
-	background: black;
-	margin: 10px;
-	cursor: pointer;
-	height: 50px;
-}
-#ytdownloader {
-    border: 1px solid white;
-    overflow: hidden;
-	float:left;
-	border-radius: 7px;
-	background: black;
-	margin: 10px;
-	cursor: pointer;
-	height: 50px;
-}
-#base64 {
-    border: 1px solid white;
-    overflow: hidden;
-	float:left;
-	border-radius: 7px;
-	background: black;
-	margin: 10px;
-	cursor: pointer;
-	height: 50px;
-}
-#tts {
-    border: 1px solid white;
-    overflow: hidden;
-	float:left;
-	border-radius: 7px;
-	background: black;
-	margin: 10px;
-	cursor: pointer;
-	height: 50px;
-}
-#calc {
-	border: 1px solid white;
-    overflow: hidden;
-	float:left;
-	cursor: pointer;
-	border-radius: 7px;
-	background: black;
-	margin: 10px;
-	height: 50px;
-}
-#gzl {
-	border: 1px solid white;
-    overflow: hidden;
-	float:left;
-	cursor: pointer;
-	border-radius: 7px;
-	background: black;
-	margin: 10px;
-	height: 50px;
-}
-#oth {
+.wrbox {
     border: 1px solid white;
     overflow: hidden;
 	float:left;
 	cursor: pointer;
-	border-radius: 7px;
+	border-radius: 6px;
 	background: black;
 	margin: 10px;
-	height: 50px;
+	height: 40px;
 }
