@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+  <head>
+	<script src="FileSaver.js"></script>
+    <title>Paint!</title>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+		height: 100%;
+		width:  100%;
+		overflow: hidden
+      }
+	  canvas {
+        max-width: 100%;
+        height: auto;
+        width: auto\9;
+		margin: 0px;
+		cursor: crosshair;
+      }
+      button{
+		border-radius: 5px;
+		cursor: pointer;
+      }
+    </style>
+  </head>
+  <body data-rsssl=1>
+    <p>&nbsp;
+		<button onclick="ChColor();" style="margin-left: 5px;">Change Color</button>&nbsp;&nbsp;
+		<button onclick="ChWidth();">Brush Width</button>&nbsp;&nbsp;
+		<button id="ChTyBtn" onclick="ChType();">Round</button>
+		&nbsp;&nbsp;<button onclick="DLCanv();">Save Painting</button>
+		&nbsp;&nbsp;<button onclick="ResetPage();">Reset</button>
+	</p>
+    <hr style="border-top: dotted 1px;">
+  	<div id="paint">
+		<canvas id="myCanvas"></canvas>
+	</div>
+	<hr style="border-top: dotted 1px;">
+	<a style="margin-left: 5px;">If you see this please click on "Reset" or reload the page.</a>
+    <script>
+if( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPad/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ || navigator.userAgent.match(/Windows Phone/i) ) {
+ location.href = 'https://pggamer2.github.io/404#mobile';
+ }
+
+var canvas = document.getElementById('myCanvas');
+var ctx = canvas.getContext('2d');
+ 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+var painting = document.getElementById('paint');
+var paint_style = getComputedStyle(painting);
+canvas.width = parseInt(paint_style.getPropertyValue('width'));
+canvas.height = parseInt(paint_style.getPropertyValue('height'));
+
+var mouse = {x: 0, y: 0};
+ 
+canvas.addEventListener('mousemove', function(e) {
+  mouse.x = e.pageX - this.offsetLeft;
+  mouse.y = e.pageY - this.offsetTop;
+}, false);
+
+ctx.lineWidth = 3;
+ctx.lineJoin = 'round';
+ctx.lineCap = 'round';
+ctx.strokeStyle = '#000000';
+ 
+canvas.addEventListener('mousedown', function(e) {
+    ctx.beginPath();
+    ctx.moveTo(mouse.x, mouse.y);
+    canvas.addEventListener('mousemove', onPaint, false);
+}, false);
+ 
+canvas.addEventListener('mouseup', function() {
+    canvas.removeEventListener('mousemove', onPaint, false);
+}, false);
+ 
+var onPaint = function() {
+    ctx.lineTo(mouse.x, mouse.y);
+    ctx.stroke();
+}
+
+function ChColor() {
+var chcol = prompt('Type here the color');
+ctx.strokeStyle = chcol;
+}
+
+function ChWidth() {
+var chw = prompt('Type here the brush width');
+ctx.lineWidth = chw;
+}
+
+function ChType() {
+if (ctx.lineCap=="square") {
+ctx.lineJoin = 'round';
+ctx.lineCap = 'round';
+document.getElementById("ChTyBtn").innerHTML = "Round";
+} else {
+ctx.lineJoin = 'square';
+ctx.lineCap = 'square';
+document.getElementById("ChTyBtn").innerHTML = "Square";
+}}
+
+function DLCanv() {
+	canvas.toBlob(function(blob) {
+		var d = new Date;
+		var dstr = [d.getDate(),d.getHours(),d.getMinutes(),d.getSeconds()].join('');
+		saveAs(blob, "My Painting " + dstr + ".png");
+	});
+}
+
+function ResetPage() {
+var surerel = confirm("Are you sure?");
+if (surerel == true) {
+  location.reload();
+}}
+    </script>
+  </body>       

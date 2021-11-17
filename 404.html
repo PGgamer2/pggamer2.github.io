@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<head>
+<title>Error</title>
+<link rel="shortcut icon" type="image/x-icon" href="https://pggamer2.github.io/favicon.ico">
+<style>
+@font-face {
+  font-family: 'aileronBI';
+  src: url('https://pggamer2.github.io/aileron-bolditalic.otf') format('opentype');
+}
+p, a, h1 {
+    font:inherit;
+	color: #f1f1f1;
+    font-family: aileronBI;
+    vertical-align:baseline
+}
+body{
+  margin: 0;
+  padding: 0;
+  background: #0a0a0a;
+}
+.eyes{
+  width: 100%;
+  text-align: center;
+}
+.eye{
+  width: 240px;
+  height: 120px;
+  background: #fff;
+  display: inline-block;
+  margin: 40px;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+}
+.ball{
+  width: 40px;
+  height: 40px;
+  background: #000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  border: 15px solid #333;
+}
+#mobT { display: none; }
+#defError { display: none; }
+</style>
+<script>
+window.onload = function () {
+  var hash = window.location.hash || "";
+  if (hash === "") document.getElementById("defError").style.display="block";
+  if (hash === "#mobile") document.getElementById("mobT").style.display="block";
+};
+</script>
+</head>
+<body>
+  <br><br><h1 style="text-align: center;font-size:300%;">OOPS...</h1><br>
+
+  <div id="defError">
+    <p style="text-align: center;font-size:150%;">Error 404</p>
+    <p style="text-align: center;font-size:130%;">Page not found!</p>
+  </div>
+  <div id="mobT">
+    <br>
+    <p style="text-align: center;font-size:150%;">To play you have to use your pc!</p>
+  </div>
+
+  <br>
+  <div class="eyes">
+    <div class="eye">
+      <div class="ball"></div>
+    </div>
+    <div class="eye">
+      <div class="ball"></div>
+    </div>
+  </div>
+  <br>
+  <script>
+    var balls = document.getElementsByClassName("ball");
+    document.onmousemove = function(){
+        var x = event.clientX * 100 / window.innerWidth + "%";
+        var y = event.clientY * 100 / window.innerHeight + "%";
+
+        for(var i=0;i<2;i++){
+            balls[i].style.left = x;
+            balls[i].style.top = y;
+            balls[i].style.transform = "translate(-"+x+",-"+y+")";
+        }
+    }
+  </script>
+</body>
