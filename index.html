@@ -6,13 +6,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
 * { font-family: 'Open Sans', sans-serif; }
 html {
-	-webkit-animation: bg-pan-top 50s both;
-	animation: bg-pan-top 50s both;
+	-webkit-animation: bg-pan-top 400s linear infinite;
+	animation: bg-pan-top 400s linear infinite;
 	background-image: linear-gradient(0deg,#2dcca7,#3e91cc,#cc6aa5,#3e91cc,#2dcca7);
 	background-size: 100% 350vh;
 }
 body { margin: 0px; padding: 0px; height: 100%; padding-top: 2em; text-align: center; }
-@-webkit-keyframes bg-pan-top{0%{background-position:50% 100%}100%{background-position:50% 0}}@keyframes bg-pan-top{0%{background-position:50% 100%}100%{background-position:50% 0}}
+@-webkit-keyframes bg-pan-top{from{background-position:50% 0%}to{background-position:50% 1000%}}
+@keyframes bg-pan-top{from{background-position:50% 0%}to{background-position:50% 1000%}}
 
 #title {
 	font-size: 250%;
@@ -39,7 +40,8 @@ body { margin: 0px; padding: 0px; height: 100%; padding-top: 2em; text-align: ce
 	cursor: pointer;
 }
 .slide-top:hover {-webkit-animation:slide-top .5s cubic-bezier(.25,.46,.45,.94) both;animation:slide-top .5s cubic-bezier(.25,.46,.45,.94) both}
-@-webkit-keyframes slide-top{0%{-webkit-transform:translateY(0);transform:translateY(0)}100%{-webkit-transform:translateY(-2em);transform:translateY(-2em)}}@keyframes slide-top{0%{-webkit-transform:translateY(0);transform:translateY(0)}100%{-webkit-transform:translateY(-2em);transform:translateY(-2em)}}
+@-webkit-keyframes slide-top{0%{-webkit-transform:translateY(0);transform:translateY(0)}100%{-webkit-transform:translateY(-2em);transform:translateY(-2em)}}
+@keyframes slide-top{0%{-webkit-transform:translateY(0);transform:translateY(0)}100%{-webkit-transform:translateY(-2em);transform:translateY(-2em)}}
 </style>
 </head>
 <body>
