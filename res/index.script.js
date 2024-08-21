@@ -1,5 +1,6 @@
 var mouseY = -1;
 document.addEventListener("mousemove", function (e) {
+	if ("ontouchstart" in document.documentElement) return;
 	mouseY = e.pageY - window.scrollY;
 });
 document.addEventListener("mouseleave", function (e) {
@@ -39,15 +40,18 @@ function onUpdate() {
 	
 	// Change opacity
 	let elem = document.getElementsByClassName("sideOpt");
-	for (let i = 0; i < elem.length; i++) {
-		let boundingRect = elem[i].getBoundingClientRect();
-		let yPos = boundingRect.top + boundingRect.height / 2;
-		let opacity = 1;
-		if (yPos < window.innerHeight * 0.2)
-			opacity = yPos / (window.innerHeight * 0.2);
-		if (yPos > window.innerHeight * 0.8)
-			opacity = (window.innerHeight - yPos) / (window.innerHeight * 0.2);
-		elem[i].style.opacity = opacity > 0 ? opacity : 0;
+	if (elem[0].getBoundingClientRect().top < 0
+		|| elem[elem.length - 1].getBoundingClientRect().top + elem[elem.length - 1].getBoundingClientRect().height > window.innerHeight) {
+		for (let i = 0; i < elem.length; i++) {
+			let boundingRect = elem[i].getBoundingClientRect();
+			let yPos = boundingRect.top + boundingRect.height / 2;
+			let opacity = 1;
+			if (yPos < window.innerHeight * 0.2)
+				opacity = yPos / (window.innerHeight * 0.2);
+			if (yPos > window.innerHeight * 0.8)
+				opacity = (window.innerHeight - yPos) / (window.innerHeight * 0.2);
+			elem[i].style.opacity = opacity > 0 ? opacity : 0;
+		}
 	}
 	
 	window.requestAnimationFrame(onUpdate);
