@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Remaining Time</title>
+	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTXfdK+rfZc8C1Aehk5" crossorigin="anonymous">
+	<link rel="stylesheet" href="datepicker.min.css">
+	<style>
+		body {
+			height: 100%;
+			width: 100%;
+			margin: 0;
+		}
+		.center {
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+		}
+		.center input {
+			margin: 10px;
+		}
+	</style>
+</head>
+<body>
+	<div class="center">
+	<form class="pure-form" autocomplete="off">
+		<input type="text" placeholder="1904-01-01" id="datepickInput">
+		<input type="text" placeholder="12:30:06" id="timepickInput">
+	</form>
+	<input type="submit" class="pure-button" onclick="goToUntilPage();">
+	</div>
+	<script src="datepicker.min.js"></script>
+	<script>
+		var picker = datepicker('#datepickInput', {
+		  formatter: function(input, date, instance) {
+			date.setDate(date.getDate() + 1);
+			input.value = date.toISOString().split("T")[0];
+		  }
+		});
+		function goToUntilPage() {
+			var url = "until.html?";
+			var date = document.getElementById("datepickInput").value;
+			var time = document.getElementById("timepickInput").value;
+			if (date && date.replace(/^(\d+-){2}?\d+$/g, '') == '') {
+				var dateArray = date.split('-');
+				url = addParam(url, 'y', dateArray[0]);
+				url = addParam(url, 'm', dateArray[1]);
+				url = addParam(url, 'd', dateArray[2]);
+			}
+			if (time && time.replace(/^(\d+:){2}?\d+$/g, '') == '') {
+				var timeArray = time.split(':');
+				url = addParam(url, 'h', timeArray[0]);
+				url = addParam(url, 'min', timeArray[1]);
+				url = addParam(url, 's', timeArray[2]);
+			}
+			window.location.href = url;
+		}
+		function addParam(url, param, val) {
+			switch (url.slice(-1)) {
+				case '&':
+				case '?':
+					url += param + "=" + val;
+					break;
+				default:
+					url += "&" + param + "=" + val;
+			}
+			return url;
+		}
+	</script>
+</body>
+</html>

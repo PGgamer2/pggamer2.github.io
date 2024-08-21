@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta content='width=device-width, initial-scale=1' name='viewport'/>
+	<title>Remaining Time</title>
+	<link rel="shortcut icon" href="favicon.ico"/>
+	<style>
+	body {
+		height: 100%;
+		width: 100%;
+		margin: 0;
+	}
+	#confetti-holder { position: absolute; }
+	audio { display:none;}
+	.sec1 {
+		background-color: #11181e;
+		width: 40%;
+		float: left;
+		height: 100vh;
+		border-right: 1vw solid #FFFFFF; 
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+		color: white;
+	}
+	.sec2 {
+		background-color: #798EA4;
+		width: 60%;
+		float: left;
+		height: 100vh;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		text-align: center;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		color: white;
+	}
+	#daylabelToday {
+		margin-top: 16vh;
+	}
+	.sec1 * {
+		font-size: 3.6vw;
+		margin-left: 7%;
+	}
+	.sec2 p { font-size: 3vw; margin: 15px; }
+	#timelabelUntilFull { font-size: 3.2vw; }
+	#timelabelUntilFull small { font-size: 2.5vw; }
+	</style>
+</head>
+<body>
+	<canvas id="confetti-holder"></canvas>
+	<div class="sec1">
+		<p id="daylabelToday">Loading...</p>
+		<p id="timelabelToday"></p>
+	</div>
+	<div class="sec2">
+		<p id="timelabelUntilFull"></p>
+		<p id="DaysLabel"></p>
+		<p id="HoursLabel"></p>
+		<p id="MinutesLabel"></p>
+		<p id="SecondsLabel"></p>
+		<p id="MilliLabel"></p>
+	</div>
+	<audio id="partyhorn" src="partyhorn.wav"></audio>
+	<script src="confetti.min.js"></script>
+	<script src="main.js"></script>
+</body>
+</html>

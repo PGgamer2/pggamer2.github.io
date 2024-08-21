@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Paint!</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+    <style>
+		body {
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+		}
+		canvas {
+			height: 100%;
+			width: 100%;
+			margin: 0px;
+			cursor: crosshair;
+		}
+		button {
+			border-radius: 5px;
+			cursor: pointer;
+		}
+    </style>
+</head>
+<body>
+	<p>&nbsp;
+		<button onclick="ChangeColor();" style="margin-left: 5px;">Change Color</button>:
+		<a id="displayColor">black</a>&nbsp;&nbsp;
+		<button onclick="ChangeWidth();">Brush Width</button>:
+		<a id="displayWidth">3</a>&nbsp;&nbsp;
+		<button id="typeBtn" onclick="ChangeType();">Round</button>
+		&nbsp;&nbsp;<button onclick="DLCanv();">Save Painting</button>
+		&nbsp;&nbsp;<button onclick="ResetPage();">Reset</button>
+	</p>
+    <hr style="border-top: dotted 1px;">
+	<div draggable="false">
+		<canvas id="drawableCanvas" draggable="false"></canvas>
+	</div>
+	
+	<script src="res/paint.js"></script>
+</body>       
+</html>

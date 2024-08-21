@@ -1,92 +1,59 @@
 <!DOCTYPE html>
+<html>
 <head>
-<title>Error</title>
-<link rel="shortcut icon" type="image/x-icon" href="https://pggamer2.github.io/favicon.ico">
-<style>
-@font-face {
-  font-family: 'aileronBI';
-  src: url('https://pggamer2.github.io/aileron-bolditalic.otf') format('opentype');
-}
-p, a, h1 {
-    font:inherit;
-	color: #f1f1f1;
-    font-family: aileronBI;
-    vertical-align:baseline
-}
-body{
-  margin: 0;
-  padding: 0;
-  background: #0a0a0a;
-}
-.eyes{
-  width: 100%;
-  text-align: center;
-}
-.eye{
-  width: 240px;
-  height: 120px;
-  background: #fff;
-  display: inline-block;
-  margin: 40px;
-  border-radius: 50%;
-  position: relative;
-  overflow: hidden;
-}
-.ball{
-  width: 40px;
-  height: 40px;
-  background: #000;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  border-radius: 50%;
-  border: 15px solid #333;
-}
-#mobT { display: none; }
-#defError { display: none; }
-</style>
-<script>
-window.onload = function () {
-  var hash = window.location.hash || "";
-  if (hash === "") document.getElementById("defError").style.display="block";
-  if (hash === "#mobile") document.getElementById("mobT").style.display="block";
-};
-</script>
-</head>
-<body>
-  <br><br><h1 style="text-align: center;font-size:300%;">OOPS...</h1><br>
+	<title>Error 404</title>
+	<style>
+		body {
+			height: 100%;
+			width: 100%;
+			margin: 0;
+			background-color: #000000;
+			color: #ffffff;
+		}
+		* {font-family: 'Itim', cursive; text-align: center; margin: 0;}
+	</style>
+		<link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+		<link rel="icon" href="https://www.iconsdb.com/icons/preview/black/question-mark-2-xxl.png">
+	</head>
+	<body>
+	<iframe id="lolvid" src="https://www.youtube-nocookie.com/embed/7c83uouDPQA?controls=0&rel=0&disablekb=1&loop=1&modestbranding=1"
+		frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" style="pointer-events: none; display: none;">
+	</iframe>
+	
+	<div id="factDiv" style="font-size: 25px; display: none; margin-top: 10px;">
+		<p>Random fun fact:</p>
+		<p id="funfact"></p>
+	</div>
+	<p id="404txt" style="margin-top: 3em; font-size: 2em;">Oops, it seems like this page doesn't exist!</p>
 
-  <div id="defError">
-    <p style="text-align: center;font-size:150%;">Error 404</p>
-    <p style="text-align: center;font-size:130%;">Page not found!</p>
-  </div>
-  <div id="mobT">
-    <br>
-    <p style="text-align: center;font-size:150%;">To play you have to use your pc!</p>
-  </div>
+	<script>
+document.addEventListener('click', function() {
+	// Play on page click
+	var lolvid = document.getElementById("lolvid");
+	var funfact = document.getElementById("funfact");
+	if (!lolvid.src.includes("autoplay=1")) {
+		document.getElementById("404txt").style.display = "none";
+		document.getElementById("factDiv").style.display = "block";
+		lolvid.src += "&autoplay=1";
+		lolvid.width = window.innerWidth - 6;
+		lolvid.height = window.innerHeight - 120;
+		lolvid.style.display = "block";
+		
+		randomFact();
+		const interval = setInterval(randomFact, 5000);
+	}
+});
 
-  <br>
-  <div class="eyes">
-    <div class="eye">
-      <div class="ball"></div>
-    </div>
-    <div class="eye">
-      <div class="ball"></div>
-    </div>
-  </div>
-  <br>
-  <script>
-    var balls = document.getElementsByClassName("ball");
-    document.onmousemove = function(){
-        var x = event.clientX * 100 / window.innerWidth + "%";
-        var y = event.clientY * 100 / window.innerHeight + "%";
-
-        for(var i=0;i<2;i++){
-            balls[i].style.left = x;
-            balls[i].style.top = y;
-            balls[i].style.transform = "translate(-"+x+",-"+y+")";
-        }
-    }
-  </script>
+function randomFact() {
+	fetch('https://uselessfacts.jsph.pl/random.json?language=en').then(function (response) {
+		return response.json();
+	}).then(function (jsonResponse) {
+		return funfact.innerHTML = jsonResponse.text;
+	}).catch(function(error) {
+		console.log(error);
+        funfact.innerHTML = "An error occurred while displaying the fun fact.";
+    });;
+}
+	</script>
 </body>
+</html>

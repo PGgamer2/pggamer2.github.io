@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+html, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: black;
+}
+
+* {
+	font-family: "DM Sans", sans-serif;
+	font-optical-sizing: auto;
+	font-style: normal;
+	font-size: 1.5rem;
+}
+
+.sideOpt:hover {
+	transform: translateX(0em);
+	margin: 1.5em 0;
+	transition: transform 500ms, margin 500ms;
+}
+
+.sideOpt {
+	position: relative;
+	z-index: 1;
+	width: 15em;
+	height: 2.5em;
+	margin: 1em 0;
+	transform: translateX(-2em);
+	transition: transform 500ms, margin 500ms;
+	background-color: white;
+	cursor: pointer;
+}
+
+.sideOpt > span {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100%;
+	margin: 0 1em;
+	text-align: center;
+}
+
+.arrowRight {
+	float: right;
+	transform: translateX(100%);
+	width: 0;
+	height: 0;
+	border-top: 1.25em solid transparent;
+	border-bottom: 1.25em solid transparent;
+	border-left: 1.25em solid white;
+}
+
+#bgContent > * {
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100%;
+	mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0) min(50vw, 100%));
+	filter: blur(2px);
+}
+
+#bgFrame {
+	pointer-events: none;
+	width: 50%;
+}

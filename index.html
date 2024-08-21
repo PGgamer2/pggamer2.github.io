@@ -1,63 +1,49 @@
 <!DOCTYPE html>
-<head>
-<title>SonoPG's site</title>
-<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
-* { font-family: 'Open Sans', sans-serif; }
-html {
-	-webkit-animation: bg-pan-top 400s linear infinite;
-	animation: bg-pan-top 400s linear infinite;
-	background-image: linear-gradient(0deg,#2dcca7,#3e91cc,#cc6aa5,#3e91cc,#2dcca7);
-	background-size: 100% 350vh;
-}
-body { margin: 0px; padding: 0px; height: 100%; padding-top: 2em; text-align: center; }
-@-webkit-keyframes bg-pan-top{from{background-position:50% 0%}to{background-position:50% 1000%}}
-@keyframes bg-pan-top{from{background-position:50% 0%}to{background-position:50% 1000%}}
-
-#title {
-	font-size: 250%;
-	text-shadow: 2px 2px 3px #222222;
-	color: white;
-	margin-bottom: 1.5em;
-}
-#title a {
-	color: #FFFFFF;
-    text-decoration: none !important;
-}
-
-.slide-top {
-	border: 1px solid black;
-	margin: 0.5em;
-	margin-bottom:-3em;
-	display: inline-block;
-	border-radius: 10px;
-	padding-top: 1.2em;
-	text-align: center;
-	width: 10em;
-	height: 10em;
-	background-image: linear-gradient(0deg,#fffffa,#ffffff);
-	cursor: pointer;
-}
-.slide-top:hover {-webkit-animation:slide-top .5s cubic-bezier(.25,.46,.45,.94) both;animation:slide-top .5s cubic-bezier(.25,.46,.45,.94) both}
-@-webkit-keyframes slide-top{0%{-webkit-transform:translateY(0);transform:translateY(0)}100%{-webkit-transform:translateY(-2em);transform:translateY(-2em)}}
-@keyframes slide-top{0%{-webkit-transform:translateY(0);transform:translateY(0)}100%{-webkit-transform:translateY(-2em);transform:translateY(-2em)}}
-</style>
-</head>
-<body>
-<div class="bg-pan-top">
-
-<p id="title"><a href="https://github.com/PGgamer2">SonoPG's site</a></p>
-
-<div onclick="window.location='Rickroll-Detector/index.html'" class="slide-top">Rickroll Detector</div>
-<div onclick="window.location='AreYouAnIdiot/index.html'" class="slide-top">AreYouAnIdiot</div>
-<div onclick="window.location='IWBTG.ts/index.html'" class="slide-top">IWBTG.ts</div>
-<div onclick="window.location='randomthings/remainingtime/index.html'" class="slide-top">Remaining Time</div>
-<div onclick="window.location='pages/paint/paint.html'" class="slide-top">Paint!</div>
-<div onclick="window.location='randomthings/bouncywindow/index.html'" class="slide-top">Bouncy Window</div>
-<div onclick="window.location='pages/matrix.html'" class="slide-top">Matrix Screen</div>
-<div onclick="window.location='pages/minestyle/index.html'" class="slide-top">MineStyle.css</div>
-<div onclick="window.location='https://github.com/PGgamer2/gzdoom-launcher'" class="slide-top">GZDoom Launcher</div>
-<div onclick="window.location='pages/tts.html'" class="slide-top">Text to Speech</div>
-</div>
-</body>
+<html>
+	<head>
+		<title>SonoPG's site</title>
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+		<link rel="stylesheet" href="res/index.style.css">
+	</head>
+	<body>
+		<br>
+		<div class="sideOpt" bg-type="image" display="res/github.png" onclick="window.location='https://github.com/PGgamer2';">
+			<span>GitHub Homepage</span>
+			<div class="arrowRight"></div>
+		</div>
+		<div class="sideOpt" bg-type="image" display="Rickroll-Detector/bg.jpg" onclick="window.location='Rickroll-Detector/';">
+			<span>Rickroll Detector</span>
+			<div class="arrowRight"></div>
+		</div>
+		<div class="sideOpt" bg-type="image" display="res/iwbtg.png" onclick="window.location='IWBTG.ts/';">
+			<span>IWBTG.ts</span>
+			<div class="arrowRight"></div>
+		</div>
+		<div class="sideOpt" bg-type="iframe" display="remainingtime/until.html?y=3000&m=01&d=01" onclick="window.location='remainingtime/';">
+			<span>Remaining Time</span>
+			<div class="arrowRight"></div>
+		</div>
+		<div class="sideOpt" bg-type="image" display="res/bouncy.png" onclick="window.location='bouncy';">
+			<span>Bouncy Window</span>
+			<div class="arrowRight"></div>
+		</div>
+		<div class="sideOpt" bg-type="image" display="res/paint.png" onclick="window.location='paint';">
+			<span>Paint!</span>
+			<div class="arrowRight"></div>
+		</div>
+		<div class="sideOpt" bg-type="iframe" display="matrix.html" onclick="window.location='matrix';">
+			<span>Enter the Matrix</span>
+			<div class="arrowRight"></div>
+		</div>
+		<div class="sideOpt" bg-type="image" display="res/idiot.png" onclick="window.location='AreYouAnIdiot/';">
+			<span>AreYouAnIdiot</span>
+			<div class="arrowRight"></div>
+		</div>
+		<br>
+		<div id="bgContent">
+			<img id="bgImg" src="res/github.png"></img>
+			<iframe id="bgFrame" frameborder="0" loading="lazy"></iframe>
+		</div>
+		<script src="res/index.script.js"></script>
+	</body>
+</html>

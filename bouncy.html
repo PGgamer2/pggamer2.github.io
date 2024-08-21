@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bouncy Window</title>
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+	<style>
+	* {
+		text-align: center;
+		font-family: 'Open Sans', sans-serif;
+	}
+	div {
+		margin-top: 3em;
+	}
+	</style>
+</head>
+
+<body>
+	<div>
+	<i>This won't work on mobile devices, obviously</i><br>
+	<br><button onclick="openWin()">Open Window</button>&emsp;
+	<button onclick="try {mainWindow.focus();} catch (error) {}">Focus on Window</button>&emsp;
+	<button onclick="try {mainWindow.close();} catch (error) {}">Close Window</button><br>
+	<br><input type="number" id="velXInput" placeholder="1, 2, 3..." min="1"></input>&emsp;
+	<button onclick="ChangeXBtn();">Change X velocity</button><br>
+	<br><input type="number" id="velYInput" placeholder="1, 2, 3..." min="1"></input>&emsp;
+	<button onclick="ChangeYBtn();">Change Y velocity</button>
+	</div>
+
+	<script>
+	var mainWindow, m;
+	var prevXpos, prevYpos;
+	var dirX = 1;
+	var dirY = 1;
+	var dvdimg = 1;
+
+	window.onbeforeunload = function(){
+	   mainWindow.close();
+	}
+
+	function openWin() {
+		try {mainWindow.close();} catch (error) {}
+		mainWindow = window.open("about:blank", "bouncy", "width=250, height=200, menubar=no, location=no, resizable=no, scrollbars=no, status=no, toolbar=no");
+		mainWindow.document.write("<title>Bouncy</title><img id='dvdlogo' src='https://bouncingdvdlogo.com/logos/dvdlogo-01.svg'></img>");
+		if (!m) {Move()};
+	}
+	function ChangeXBtn() {
+		var x = document.getElementById("velXInput").value;
+		if (x < 1) {
+			document.getElementById("velXInput").value = "";
+		} else {
+			dirX = Math.sign(dirX) * x;
+		}
+	}
+	function ChangeYBtn() {
+		var y = document.getElementById("velYInput").value;
+		if (y < 1) {
+			document.getElementById("velYInput").value = "";
+		} else {
+			dirY = Math.sign(dirY) * y;
+		}
+	}
+	function Move() {
+		try {
+			prevXpos = mainWindow.screenLeft;
+			prevYpos = mainWindow.screenTop;
+			mainWindow.moveBy(dirX, dirY);
+			try { mainWindow.resizeTo(250, 200); } catch(error) {} // Some browsers don't allow window resizing
+			if (prevXpos == mainWindow.screenLeft) {
+				dirX = -dirX;
+				ChangeDVDImage();
+			} else if (prevYpos == mainWindow.screenTop) {
+				dirY = -dirY;
+				ChangeDVDImage();
+			}
+			m = setTimeout(Move,1);
+		} catch (error) {
+			console.log("The window doesn't exist anymore.")
+			m = null;
+		}
+	}
+	function ChangeDVDImage() {
+		dvdimg = dvdimg == 8 ? 1 : dvdimg + 1;
+		mainWindow.document.getElementById("dvdlogo").src = "https://bouncingdvdlogo.com/logos/dvdlogo-0" + dvdimg + ".svg";
+	}
+	</script>
+</body>
+</html>
