@@ -52,6 +52,10 @@ function onUpdate() {
 				opacity = (window.innerHeight - yPos) / (window.innerHeight * 0.2);
 			elem[i].style.opacity = opacity > 0 ? opacity : 0;
 		}
+	} else {
+		for (let i = 0; i < elem.length; i++) {
+			elem[i].style.opacity = 1;
+		}
 	}
 	
 	window.requestAnimationFrame(onUpdate);
