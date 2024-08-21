@@ -26,7 +26,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Resize canvas to window size
-document.addEventListener('pointermove', function(e) {
+document.addEventListener('mousemove', function(e) {
 	if (canvas.width == window.innerWidth && canvas.height == window.innerHeight)
 		return;
 	let prevSettings = {width: ctx.lineWidth, join: ctx.lineJoin, cap: ctx.lineCap};
@@ -41,7 +41,7 @@ document.addEventListener('pointermove', function(e) {
 
 // Draw functions
 var ptr = {x: 0, y: 0};
-canvas.addEventListener('pointermove', function(e) {
+canvas.addEventListener('mousemove', function(e) {
 	ptr.x = e.pageX - this.offsetLeft;
 	ptr.y = e.pageY - this.offsetTop;
 });
@@ -52,15 +52,15 @@ var onPaint = function() {
 }
 
 var listeningForPainting = false;
-canvas.addEventListener('pointerdown', function(e) {
+canvas.addEventListener('mousedown', function(e) {
     ctx.beginPath();
     ctx.moveTo(ptr.x, ptr.y);
-    canvas.addEventListener('pointermove', onPaint, false);
+    canvas.addEventListener('mousemove', onPaint, false);
 	listeningForPainting = true;
 }, false);
 
 var stopPainting = function() {
-	canvas.removeEventListener('pointermove', onPaint, false);
+	canvas.removeEventListener('mousemove', onPaint, false);
 	if (listeningForPainting) {
 		// Save frame for undo/redo
 		actionImagesStack.splice(nextActionIndex++);
@@ -68,8 +68,8 @@ var stopPainting = function() {
 		listeningForPainting = false;
 	}
 }
-canvas.addEventListener('pointerup', stopPainting, false);
-canvas.addEventListener('pointerleave', stopPainting);
+canvas.addEventListener('mouseup', stopPainting, false);
+canvas.addEventListener('mouseleave', stopPainting);
 
 // Buttons
 function ChangeColor() {
