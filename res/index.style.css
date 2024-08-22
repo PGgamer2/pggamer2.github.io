@@ -12,7 +12,7 @@ html, body {
 	font-family: "DM Sans", sans-serif;
 	font-optical-sizing: auto;
 	font-style: normal;
-	font-size: 28pt;
+	font-size: min(28pt, 2.5vw);
 }
 
 .sideOpt:hover {
