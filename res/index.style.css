@@ -52,16 +52,18 @@ html, body {
 	border-left: 1.25em solid white;
 }
 
+#bgContent {
+	position: relative;
+	height: 0;
+}
+
 #bgContent > * {
 	position: fixed;
 	top: 0;
 	right: 0;
-	height: 100%;
-	mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0) min(50vw, 100%));
+	min-height: 100vh;
+	min-width: 50%;
 	filter: blur(2px);
-}
-
-#bgFrame {
+	mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0) min(50vw, 100%));
 	pointer-events: none;
-	width: 50%;
 }
