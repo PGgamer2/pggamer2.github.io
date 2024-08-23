@@ -6,13 +6,14 @@ html, body {
 	margin: 0;
 	padding: 0;
 	background-color: black;
+	overflow-x: hidden;
 }
 
 * {
 	font-family: "DM Sans", sans-serif;
 	font-optical-sizing: auto;
 	font-style: normal;
-	font-size: min(28pt, 2.5vw);
+	font-size: 2.5vw;
 }
 
 .sideOpt:hover {
@@ -61,7 +62,7 @@ html, body {
 	position: fixed;
 	top: 0;
 	right: 0;
-	min-height: 100vh;
+	min-height: 100%;
 	min-width: 50%;
 	filter: blur(2px);
 	mask-image: linear-gradient(to left, rgba(0,0,0,1), rgba(0,0,0,0) min(50vw, 100%));
