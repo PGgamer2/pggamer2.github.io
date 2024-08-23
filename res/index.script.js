@@ -18,9 +18,9 @@ function onUpdate() {
 	
 	// Change background
 	let hoverOpt = document.elementFromPoint(1, mouseY < 0 ? window.innerHeight / 2 : mouseY);
+	let bgImgElem = document.getElementById("bgImg");
+	let bgFrameElem = document.getElementById("bgFrame");
 	if (typeof hoverOpt !== "undefined" && typeof hoverOpt.getAttribute("display") === "string") {
-		let bgImgElem = document.getElementById("bgImg");
-		let bgFrameElem = document.getElementById("bgFrame");
 		bgImgElem.style.display = "none";
 		bgFrameElem.style.display = "none";
 		switch(hoverOpt.getAttribute("bg-type")) {
@@ -38,10 +38,10 @@ function onUpdate() {
 		}
 	}
 	
-	// Change opacity
 	let elem = document.getElementsByClassName("sideOpt");
 	if (elem[0].getBoundingClientRect().top < 0
 		|| elem[elem.length - 1].getBoundingClientRect().top + elem[elem.length - 1].getBoundingClientRect().height > window.innerHeight) {
+		// Change opacity
 		for (let i = 0; i < elem.length; i++) {
 			let boundingRect = elem[i].getBoundingClientRect();
 			let yPos = boundingRect.top + boundingRect.height / 2;
@@ -55,6 +55,13 @@ function onUpdate() {
 	} else {
 		for (let i = 0; i < elem.length; i++) {
 			elem[i].style.opacity = 1;
+		}
+		if ("ontouchstart" in document.documentElement) {
+			bgImgElem.style.display = "none";
+			bgFrameElem.style.display = "";
+			if (!bgFrameElem.src.endsWith("matrix.html")) {
+				bgFrameElem.src = "matrix.html";
+			}
 		}
 	}
 	
