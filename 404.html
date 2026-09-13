@@ -21,7 +21,7 @@
 	</iframe>
 	
 	<div id="factDiv" style="font-size: 25px; display: none; margin-top: 10px;">
-		<p>Random fun fact:</p>
+		<p id="funfactTitle"></p>
 		<p id="funfact"></p>
 	</div>
 	<p id="404txt" style="margin-top: 3em; font-size: 2em;">Oops, it seems like this page doesn't exist!</p>
@@ -31,6 +31,7 @@ document.addEventListener('click', function() {
 	// Play on page click
 	var lolvid = document.getElementById("lolvid");
 	var funfact = document.getElementById("funfact");
+	var funfactTitle = document.getElementById("funfactTitle");
 	if (!lolvid.src.includes("autoplay=1")) {
 		document.getElementById("404txt").style.display = "none";
 		document.getElementById("factDiv").style.display = "block";
@@ -45,13 +46,20 @@ document.addEventListener('click', function() {
 });
 
 function randomFact() {
-	fetch('https://uselessfacts.jsph.pl/random.json?language=en').then(function (response) {
+	fetch('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en').then(function (response) {
 		return response.json();
 	}).then(function (jsonResponse) {
-		return funfact.innerHTML = jsonResponse.text;
-	}).catch(function(error) {
-		console.log(error);
-        funfact.innerHTML = "An error occurred while displaying the fun fact.";
+		if (jsonResponse.fact) {
+			funfactTitle.innerHTML = "Random fun fact:";
+			funfact.innerHTML = jsonResponse.fact;
+		} else {
+			funfactTitle.innerHTML = "";
+			funfact.innerHTML = "";
+		}
+	}).catch(function(err) {
+		console.error(err);
+		funfactTitle.innerHTML = "";
+        funfact.innerHTML = "";
     });;
 }
 	</script>
