@@ -6,6 +6,8 @@ const fontSize = window.innerHeight / 50;
 var drops = [];
 
 function draw() {
+	if (canvas.width == 0 || canvas.height == 0) return;
+	
 	// Resize canvas if the window's size changes
 	if (canvas.width != window.innerWidth || canvas.height != window.innerHeight) {
 		let prevFrame = ctx.getImageData(0, 0, canvas.width, canvas.height);
