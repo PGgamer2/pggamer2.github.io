@@ -49,9 +49,9 @@ function randomFact() {
 	fetch('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en').then(function (response) {
 		return response.json();
 	}).then(function (jsonResponse) {
-		if (jsonResponse.fact) {
+		if (jsonResponse.text) {
 			funfactTitle.innerHTML = "Random fun fact:";
-			funfact.innerHTML = jsonResponse.fact;
+			funfact.innerHTML = jsonResponse.text;
 		} else {
 			funfactTitle.innerHTML = "";
 			funfact.innerHTML = "";
