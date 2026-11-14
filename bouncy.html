@@ -63,10 +63,6 @@
 	}
 	function Move() {
 		try {
-			prevXpos = mainWindow.screenLeft;
-			prevYpos = mainWindow.screenTop;
-			mainWindow.moveBy(dirX, dirY);
-			try { mainWindow.resizeTo(250, 200); } catch(error) {} // Some browsers don't allow window resizing
 			if (prevXpos == mainWindow.screenLeft) {
 				dirX = -dirX;
 				ChangeDVDImage();
@@ -74,6 +70,10 @@
 				dirY = -dirY;
 				ChangeDVDImage();
 			}
+			try { mainWindow.resizeTo(250, 200); } catch(error) {} // Some browsers don't allow window resizing
+			prevXpos = mainWindow.screenLeft;
+			prevYpos = mainWindow.screenTop;
+			mainWindow.moveBy(dirX, dirY);
 			m = setTimeout(Move,1);
 		} catch (error) {
 			console.log("The window doesn't exist anymore.")
