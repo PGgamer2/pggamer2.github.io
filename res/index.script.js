@@ -1,4 +1,4 @@
-var mouseY = -1;
+var mouseY = 1;
 document.addEventListener("mousemove", function (e) {
 	if ("ontouchstart" in document.documentElement) return;
 	mouseY = e.pageY - window.scrollY;
