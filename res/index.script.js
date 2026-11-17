@@ -26,7 +26,7 @@ function onUpdate() {
 		switch(hoverOpt.getAttribute("bg-type")) {
 		case "iframe":
 			if (!bgFrameElem.src.endsWith(hoverOpt.getAttribute("display"))) {
-				bgFrameElem.src = hoverOpt.getAttribute("display");
+				bgFrameElem.src = window.location + hoverOpt.getAttribute("display");
 			}
 			bgFrameElem.style.display = "";
 			break;
