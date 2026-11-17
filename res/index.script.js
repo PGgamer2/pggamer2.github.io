@@ -17,7 +17,7 @@ function onUpdate() {
 	}
 	
 	// Change background
-	let hoverOpt = document.elementFromPoint(1, mouseY < 0 ? window.innerHeight / 2 : mouseY);
+	let hoverOpt = document.elementFromPoint(1, mouseY < 0 ? window.innerHeight / 2 : mouseY) || undefined;
 	let bgImgElem = document.getElementById("bgImg");
 	let bgFrameElem = document.getElementById("bgFrame");
 	if (typeof hoverOpt !== "undefined" && typeof hoverOpt.getAttribute("display") === "string") {
